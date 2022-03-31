@@ -6658,7 +6658,6 @@ self.C3_JsPropNameTable = [
 	{AJAX: 0},
 	{Слова: 0},
 	{БукваНаКарточке: 0},
-	{ВсеБуквыАлфавита: 0},
 	{ТекущееСлово: 0},
 	{КнопкаСпрайт: 0},
 	{МашинаБота: 0},
@@ -6892,7 +6891,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "global@score",
 		() => "default",
-		() => 4,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, "id");
@@ -6929,6 +6927,7 @@ self.C3_ExpressionFuncs = [
 			return () => and(" Счёт: ", f0(f1(), "score"));
 		},
 		() => ". . .",
+		() => 4,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => and(" Счёт: ", f0());
