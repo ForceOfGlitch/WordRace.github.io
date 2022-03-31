@@ -6574,17 +6574,18 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Json,
 		C3.Plugins.Spritefont2,
 		C3.Plugins.System.Cnds.OnLayoutStart,
+		C3.Plugins.System.Acts.SetLayerVisible,
+		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerAvatar,
 		C3.Plugins.AJAX.Acts.RequestFile,
-		C3.Plugins.System.Acts.SetLayerVisible,
-		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.System.Exps.loopindex,
 		C3.Plugins.AJAX.Cnds.OnComplete,
 		C3.Plugins.Json.Acts.Parse,
 		C3.Plugins.AJAX.Exps.LastData,
+		C3.Plugins.Json.Exps.Get,
 		C3.Plugins.System.Cnds.Every,
 		C3.Plugins.System.Cnds.PickNth,
 		C3.Plugins.System.Acts.SubVar,
@@ -6610,7 +6611,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Exps.len,
-		C3.Plugins.Json.Exps.Get,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
 		C3.Plugins.Text.Acts.Destroy,
@@ -6624,7 +6624,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Plugins.Text.Exps.LayerNumber,
 		C3.Plugins.System.Acts.Wait,
-		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
@@ -6657,7 +6656,7 @@ self.C3_JsPropNameTable = [
 	{ДвижениеК: 0},
 	{МашинаИгрока: 0},
 	{AJAX: 0},
-	{JSON: 0},
+	{Слова: 0},
 	{БукваНаКарточке: 0},
 	{ВсеБуквыАлфавита: 0},
 	{ТекущееСлово: 0},
@@ -6666,10 +6665,13 @@ self.C3_JsPropNameTable = [
 	{АватарыРекордов: 0},
 	{КнопкаДомой: 0},
 	{ТекстурныйШрифт: 0},
+	{ПопулярныеБуквы: 0},
+	{НепопулярныеБуквы: 0},
+	{НепопулярныеБуквыJSON: 0},
+	{ПопулярныеБуквыJSON: 0},
 	{true: 0},
 	{false: 0},
 	{ПустаяСтрока: 0},
-	{КоличествоЯчеекНаДоске: 0},
 	{ВместимостьОднойКолоды: 0},
 	{СчётчикБуквНаПоле: 0},
 	{СчётБота: 0},
@@ -6680,7 +6682,8 @@ self.C3_JsPropNameTable = [
 	{ТекущееСловоГлобал: 0},
 	{MinНомерСвободнойЯчейки: 0},
 	{ТакогоСловаНет: 0},
-	{ReturnФункции: 0}
+	{ReturnФункции: 0},
+	{ИндексВероятности: 0}
 ];
 }
 
@@ -6781,17 +6784,26 @@ function or(l, r)
 }
 
 self.C3_ExpressionFuncs = [
+		() => 1,
+		() => "Тачи по объектам после игры",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0();
 		},
 		() => "words",
-		() => 1,
-		() => "Тачи по объектам после игры",
+		() => "low",
+		() => "high",
 		() => "i",
 		() => 0,
 		() => 2,
 		() => 3,
+		() => 24,
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject((and("", f1()) + ".data"));
+		},
+		() => 7,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Время на ход: ", v0.GetValue()) + "");
@@ -6839,11 +6851,6 @@ self.C3_ExpressionFuncs = [
 			return () => f0(n1.ExpObject((and("", f2()) + ".data")));
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject((and("", f1()) + ".data"));
-		},
-		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
 			return () => (f0(v1.GetValue()) * 10);
@@ -6856,9 +6863,18 @@ self.C3_ExpressionFuncs = [
 		() => 1800,
 		() => 800,
 		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(0, 2);
+		},
+		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(f1(0, 33));
+			return () => n0.ExpObject(f1(0, 24));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject(f1(0, 7));
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -6874,68 +6890,9 @@ self.C3_ExpressionFuncs = [
 			const n1 = p._GetNode(1);
 			return () => (n0.ExpObject() + (n1.ExpInstVar() * 2));
 		},
-		() => "а",
-		() => "б",
-		() => "в",
-		() => "г",
-		() => 4,
-		() => "д",
-		() => "е",
-		() => "ё",
-		() => 7,
-		() => "ж",
-		() => 8,
-		() => "з",
-		() => 9,
-		() => "и",
-		() => 10,
-		() => "й",
-		() => 11,
-		() => "к",
-		() => 12,
-		() => "л",
-		() => 13,
-		() => "м",
-		() => 14,
-		() => "н",
-		() => 15,
-		() => "о",
-		() => 16,
-		() => "п",
-		() => 17,
-		() => "р",
-		() => 18,
-		() => "с",
-		() => 19,
-		() => "т",
-		() => 20,
-		() => "у",
-		() => 21,
-		() => "ф",
-		() => 22,
-		() => "х",
-		() => 23,
-		() => "ц",
-		() => 24,
-		() => "ч",
-		() => 25,
-		() => "ш",
-		() => 26,
-		() => "щ",
-		() => 27,
-		() => "ъ",
-		() => 28,
-		() => "ы",
-		() => 29,
-		() => "ь",
-		() => 30,
-		() => "э",
-		() => 31,
-		() => "ю",
-		() => 32,
-		() => "я",
 		() => "global@score",
 		() => "default",
+		() => 4,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, "id");
