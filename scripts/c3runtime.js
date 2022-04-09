@@ -6609,6 +6609,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Exps.Text,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.System.Cnds.CompareBoolVar,
+		C3.Plugins.Sprite.Acts.SetX,
+		C3.Plugins.Sprite.Exps.IID,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Exps.len,
 		C3.Plugins.System.Acts.SetBoolVar,
@@ -6624,6 +6626,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Plugins.Text.Exps.LayerNumber,
 		C3.Plugins.System.Acts.Wait,
+		C3.Plugins.Text.Acts.SetX,
+		C3.Plugins.Text.Exps.X,
+		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
+		C3.Plugins.System.Cnds.ForEach,
+		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
@@ -6671,6 +6678,8 @@ self.C3_JsPropNameTable = [
 	{true: 0},
 	{false: 0},
 	{ПустаяСтрока: 0},
+	{КоличествоКолод: 0},
+	{МаксимальнаяДлинаСлова: 0},
 	{ВместимостьОднойКолоды: 0},
 	{СчётчикБуквНаПоле: 0},
 	{СчётБота: 0},
@@ -6682,7 +6691,10 @@ self.C3_JsPropNameTable = [
 	{MinНомерСвободнойЯчейки: 0},
 	{ТакогоСловаНет: 0},
 	{ReturnФункции: 0},
-	{ИндексВероятности: 0}
+	{ИндексВероятности: 0},
+	{ДобавилиЛиБукву: 0},
+	{ЕстьЛиПробел: 0},
+	{ИндексСлотаПробела: 0}
 ];
 }
 
@@ -6821,7 +6833,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 60,
 		() => "Тачи по объектам в процессе игры",
-		() => 5,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
@@ -6834,8 +6845,21 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject(f1());
 		},
 		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject((f1() + 1));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (f0() + 1);
+		},
+		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("ТекущееСлово: ", v0.GetValue()) + "");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (861 + (n0.ExpObject() * 174));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6875,6 +6899,7 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => n0.ExpObject(f1(0, 7));
 		},
+		() => 8,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Ваш счёт: ", v0.GetValue()) + "");
@@ -6888,6 +6913,23 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			return () => (n0.ExpObject() + (n1.ExpInstVar() * 2));
+		},
+		() => 5,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 95);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 95);
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (v0.GetValue() - 1);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() - 1);
 		},
 		() => "global@score",
 		() => "default",
