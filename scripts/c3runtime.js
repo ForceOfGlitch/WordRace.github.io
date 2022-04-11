@@ -6631,6 +6631,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
+		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
@@ -6671,10 +6672,14 @@ self.C3_JsPropNameTable = [
 	{АватарыРекордов: 0},
 	{КнопкаДомой: 0},
 	{ТекстурныйШрифт: 0},
-	{ПопулярныеБуквы: 0},
-	{НепопулярныеБуквы: 0},
-	{НепопулярныеБуквыJSON: 0},
-	{ПопулярныеБуквыJSON: 0},
+	{ПопулярныеСогласные: 0},
+	{НепопулярныеСогласные: 0},
+	{НепопулярныеСогласныеJSON: 0},
+	{ПопулярныеСогласныеJSON: 0},
+	{ПопулярныеГласныеJSON: 0},
+	{НепопулярныеГласныеJSON: 0},
+	{НепопулярныеГласные: 0},
+	{ПопулярныеГласные: 0},
 	{true: 0},
 	{false: 0},
 	{ПустаяСтрока: 0},
@@ -6802,19 +6807,22 @@ self.C3_ExpressionFuncs = [
 			return () => f0();
 		},
 		() => "words",
-		() => "low",
-		() => "high",
+		() => "noPopularSogl",
+		() => "noPopularGlas",
+		() => "popularSogl",
+		() => "popularGlas",
 		() => "i",
 		() => 0,
 		() => 2,
-		() => 3,
-		() => 24,
+		() => 7,
+		() => 6,
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => n0.ExpObject((and("", f1()) + ".data"));
 		},
-		() => 7,
+		() => 17,
+		() => 4,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Время на ход: ", v0.GetValue()) + "");
@@ -6837,7 +6845,6 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
 		},
-		() => 6,
 		() => "",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6890,14 +6897,28 @@ self.C3_ExpressionFuncs = [
 			return () => f0(0, 2);
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(f1(0, 24));
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (f0() % 2);
 		},
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(f1(0, 7));
+			return () => n0.ExpObject(f1(0, 17));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject(f1(0, 6));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject(f1(0, 4));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject(f1(0, 2));
 		},
 		() => 8,
 		p => {
@@ -6968,8 +6989,8 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => and(" Счёт: ", f0(f1(), "score"));
 		},
+		() => 3,
 		() => ". . .",
-		() => 4,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => and(" Счёт: ", f0());
