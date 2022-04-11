@@ -6585,19 +6585,19 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.AJAX.Cnds.OnComplete,
 		C3.Plugins.Json.Acts.Parse,
 		C3.Plugins.AJAX.Exps.LastData,
+		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.Json.Exps.Get,
+		C3.Plugins.System.Cnds.Compare,
+		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.System.Cnds.Every,
 		C3.Plugins.System.Cnds.PickNth,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.Text.Acts.SetText,
-		C3.Plugins.System.Cnds.Compare,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
 		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Sprite.Exps.Y,
-		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
-		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.System.Cnds.Else,
 		C3.Plugins.System.Acts.StopLoop,
 		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
@@ -6631,7 +6631,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
-		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
@@ -6692,6 +6691,7 @@ self.C3_JsPropNameTable = [
 	{ОчкиНаПоле: 0},
 	{ОтсчётДоНажатия: 0},
 	{ЦельИгрыМетры: 0},
+	{СчётчикВыгрузкиМассивовБукв: 0},
 	{ТекущееСловоГлобал: 0},
 	{MinНомерСвободнойЯчейки: 0},
 	{ТакогоСловаНет: 0},
@@ -6825,11 +6825,11 @@ self.C3_ExpressionFuncs = [
 		() => 4,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => (and("Время на ход: ", v0.GetValue()) + "");
+			return () => v0.GetValue();
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => v0.GetValue();
+			return () => (and("Время на ход: ", v0.GetValue()) + "");
 		},
 		p => {
 			const n0 = p._GetNode(0);
