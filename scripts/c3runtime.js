@@ -6620,6 +6620,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.CreateObject,
 		C3.Plugins.Text.Acts.SetInstanceVar,
 		C3.Plugins.System.Exps.random,
+		C3.Plugins.Arr.Exps.Width,
 		C3.Plugins.System.Cnds.PickLastCreated,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
@@ -6636,12 +6637,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
+		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
 		C3.Plugins.Text.Acts.AppendText,
 		C3.Plugins.Sprite.Acts.SetVisible,
-		C3.Plugins.Text.Acts.SetHAlign,
-		C3.Plugins.Eponesh_GameScore.Exps.PlayerAvatar,
-		C3.Plugins.Eponesh_GameScore.Exps.PlayerName,
-		C3.Plugins.Eponesh_GameScore.Exps.PlayerScore
+		C3.Plugins.Text.Acts.SetHAlign
 	];
 };
 self.C3_JsPropNameTable = [
@@ -6894,8 +6893,9 @@ self.C3_ExpressionFuncs = [
 		() => 800,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(0, 2);
+			return () => f0(0, 100);
 		},
+		() => 1.5,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (f0() % 2);
@@ -6903,22 +6903,8 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(f1(0, 17));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(f1(0, 6));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(f1(0, 4));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(f1(0, 2));
+			const n2 = p._GetNode(2);
+			return () => n0.ExpObject(f1(0, n2.ExpObject()));
 		},
 		() => 8,
 		p => {
@@ -6974,6 +6960,26 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(4, "id");
 		},
+		() => 3,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => f0(((f1() - 2) + f2()), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => f0(((f1() - 2) + f2()), "name");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => and(" Счёт: ", f0(((f1() - 2) + f2()), "score"));
+		},
+		() => ". . .",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
@@ -6988,12 +6994,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => and(" Счёт: ", f0(f1(), "score"));
-		},
-		() => 3,
-		() => ". . .",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => and(" Счёт: ", f0());
 		}
 ];
 
