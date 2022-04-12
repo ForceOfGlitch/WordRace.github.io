@@ -6589,6 +6589,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Json.Exps.Get,
 		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.System.Acts.SetVar,
+		C3.Plugins.Sprite.Acts.Destroy,
+		C3.Plugins.Text.Acts.Destroy,
 		C3.Plugins.System.Cnds.Every,
 		C3.Plugins.System.Cnds.PickNth,
 		C3.Plugins.System.Acts.SubVar,
@@ -6615,8 +6617,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Exps.len,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
-		C3.Plugins.Text.Acts.Destroy,
-		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.System.Acts.CreateObject,
 		C3.Plugins.Text.Acts.SetInstanceVar,
 		C3.Plugins.System.Exps.random,
@@ -6692,10 +6692,10 @@ self.C3_JsPropNameTable = [
 	{ЦельИгрыМетры: 0},
 	{СчётчикВыгрузкиМассивовБукв: 0},
 	{ТекущееСловоГлобал: 0},
+	{ИндексВероятности: 0},
 	{MinНомерСвободнойЯчейки: 0},
 	{ТакогоСловаНет: 0},
 	{ReturnФункции: 0},
-	{ИндексВероятности: 0},
 	{ДобавилиЛиБукву: 0},
 	{ЕстьЛиПробел: 0},
 	{ИндексСлотаПробела: 0}
@@ -6872,7 +6872,7 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => f0(v1.GetValue());
 		},
-		() => 51300,
+		() => 10451,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const n1 = p._GetNode(1);
