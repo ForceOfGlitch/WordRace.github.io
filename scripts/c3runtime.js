@@ -6615,6 +6615,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.IID,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Exps.len,
+		C3.Plugins.System.Exps.mid,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
 		C3.Plugins.System.Acts.CreateObject,
@@ -6696,6 +6697,8 @@ self.C3_JsPropNameTable = [
 	{MinНомерСвободнойЯчейки: 0},
 	{ТакогоСловаНет: 0},
 	{ReturnФункции: 0},
+	{СловоДляСравнения: 0},
+	{ЕстьЛиРасхождение: 0},
 	{ДобавилиЛиБукву: 0},
 	{ЕстьЛиПробел: 0},
 	{ИндексСлотаПробела: 0}
@@ -6882,6 +6885,18 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
+			return () => (f0(v1.GetValue()) - 1);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => f0(v1.GetValue(), f2(), 1);
+		},
+		() => "*",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
 			return () => (f0(v1.GetValue()) * 10);
 		},
 		() => "Время на ход: 60",
@@ -6896,6 +6911,7 @@ self.C3_ExpressionFuncs = [
 			return () => f0(0, 100);
 		},
 		() => 1.5,
+		() => 85,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (f0() % 2);
