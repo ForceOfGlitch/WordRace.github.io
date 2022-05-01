@@ -6623,6 +6623,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.Arr.Exps.Width,
 		C3.Plugins.System.Cnds.PickLastCreated,
+		C3.Plugins.Text.Exps.IID,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
@@ -6633,6 +6634,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
+		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
@@ -6679,6 +6681,8 @@ self.C3_JsPropNameTable = [
 	{НепопулярныеГласныеJSON: 0},
 	{НепопулярныеГласные: 0},
 	{ПопулярныеГласные: 0},
+	{ОсталосьВКолоде: 0},
+	{ОстатокКолоды: 0},
 	{true: 0},
 	{false: 0},
 	{ПустаяСтрока: 0},
@@ -6909,6 +6913,11 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, 100);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => subtract(n0.ExpObject(f1()), 1);
 		},
 		() => 1.5,
 		() => 85,
