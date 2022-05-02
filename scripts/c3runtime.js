@@ -6656,12 +6656,14 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Exps.mid,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
+		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.System.Acts.CreateObject,
 		C3.Plugins.Text.Acts.SetInstanceVar,
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.Arr.Exps.Width,
 		C3.Plugins.System.Cnds.PickLastCreated,
 		C3.Plugins.Text.Exps.IID,
+		C3.Plugins.Arr.Cnds.CompareX,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
@@ -6670,7 +6672,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetX,
 		C3.Plugins.Text.Exps.X,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
-		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Button.Cnds.OnClicked,
@@ -6736,6 +6737,7 @@ self.C3_JsPropNameTable = [
 	{ОтсчётДоНажатия: 0},
 	{ЦельИгрыМетры: 0},
 	{СчётчикВыгрузкиМассивовБукв: 0},
+	{КоличествоУдалённыхКарточек: 0},
 	{ТекущееСловоГлобал: 0},
 	{ИндексВероятности: 0},
 	{MinНомерСвободнойЯчейки: 0},
@@ -6743,6 +6745,7 @@ self.C3_JsPropNameTable = [
 	{ReturnФункции: 0},
 	{СловоДляСравнения: 0},
 	{ЕстьЛиРасхождение: 0},
+	{КарточкиЗакончились: 0},
 	{ДобавилиЛиБукву: 0},
 	{ЕстьЛиПробел: 0},
 	{ИндексСлотаПробела: 0}
@@ -6972,6 +6975,10 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject(f1(0, n2.ExpObject()));
 		},
 		() => 8,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (v0.GetValue() * 8);
+		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Ваш счёт: ", v0.GetValue()) + "");
