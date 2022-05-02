@@ -6941,7 +6941,7 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
-			return () => (f0(v1.GetValue()) * 10);
+			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10);
 		},
 		() => "Время на ход: 60",
 		p => {
