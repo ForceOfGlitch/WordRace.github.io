@@ -6393,8 +6393,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.System.Acts.SetLayerVisible,
 		C3.Plugins.System.Acts.SetGroupActive,
-		C3.Plugins.Sprite.Acts.LoadURL,
-		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerAvatar,
 		C3.Plugins.AJAX.Acts.RequestFile,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Arr.Acts.SetX,
@@ -6460,15 +6458,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Acts.JSONLoad,
 		C3.Plugins.Spritefont2.Acts.SetCharacterWidth,
 		C3.Plugins.Arr.Exps.Height,
-		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
-		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
-		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
+		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
-		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRating,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerPosition,
 		C3.Plugins.Text.Acts.AppendText,
-		C3.Plugins.Sprite.Acts.SetVisible,
-		C3.Plugins.Text.Acts.SetHAlign,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
@@ -6477,6 +6470,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardAnyFetch,
+		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Sprite.Acts.SetSize,
 		C3.Plugins.Sprite.Acts.MoveToTop
 	];
@@ -6545,6 +6539,7 @@ self.C3_JsPropNameTable = [
 	{ПополнениеМонет: 0},
 	{КнопкаИграть: 0},
 	{Мышь: 0},
+	{test: 0},
 	{Текст: 0},
 	{Тач: 0},
 	{GameScore: 0},
@@ -6685,10 +6680,6 @@ function or(l, r)
 self.C3_ExpressionFuncs = [
 		() => 1,
 		() => "Тачи по объектам после игры",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0();
-		},
 		() => "words",
 		() => "noPopularSogl",
 		() => "noPopularGlas",
@@ -6697,6 +6688,10 @@ self.C3_ExpressionFuncs = [
 		() => "i",
 		() => 0,
 		() => 2,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0();
+		},
 		() => 7,
 		() => 6,
 		p => {
@@ -6867,35 +6862,8 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => n0.ExpObject(0, f1());
 		},
-		() => "global@score",
+		() => 1070,
 		() => "default",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(0, "id");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(1, "id");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(2, "id");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(3, "id");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(4, "id");
-		},
-		() => "scoreFetch",
-		() => "score",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1(), "avatar");
-		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
@@ -6906,7 +6874,6 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => and(" Счёт: ", f0(f1(), "score"));
 		},
-		() => ". . .",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (and("", (Math.floor(divide(f0("tournamentscount"), 6)) + 1)) + "");
