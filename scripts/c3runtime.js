@@ -6891,25 +6891,6 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
-			const f2 = p._GetNode(2).GetBoundMethod();
-			return () => f0(((f1() - 2) + f2()), "avatar");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			const f2 = p._GetNode(2).GetBoundMethod();
-			return () => f0(((f1() - 2) + f2()), "name");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			const f2 = p._GetNode(2).GetBoundMethod();
-			return () => and(" Счёт: ", f0(((f1() - 2) + f2()), "score"));
-		},
-		() => ". . .",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => f0(f1(), "avatar");
 		},
 		p => {
@@ -6922,6 +6903,7 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => and(" Счёт: ", f0(f1(), "score"));
 		},
+		() => ". . .",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (and("", (Math.floor(divide(f0("tournamentscount"), 6)) + 1)) + "");
