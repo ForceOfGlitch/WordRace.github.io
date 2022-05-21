@@ -6459,9 +6459,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Spritefont2.Acts.SetCharacterWidth,
 		C3.Plugins.Arr.Exps.Height,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
-		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerPosition,
-		C3.Plugins.Text.Acts.AppendText,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
@@ -6864,16 +6862,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 1070,
 		() => "default",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1(), "name");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => and(" Счёт: ", f0(f1(), "score"));
-		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (and("", (Math.floor(divide(f0("tournamentscount"), 6)) + 1)) + "");
