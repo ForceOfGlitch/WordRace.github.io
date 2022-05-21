@@ -6896,7 +6896,7 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => ((v0.GetValue() - 2) + f1());
+			return () => ((v0.GetValue() - 3) + f1());
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
