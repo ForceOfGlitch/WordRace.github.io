@@ -6718,6 +6718,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
 		},
+		() => 8,
 		() => "",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6740,7 +6741,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (861 + (n0.ExpObject() * 174));
+			return () => (972 + (n0.ExpObject() * 170));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6753,7 +6754,7 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => f0(v1.GetValue());
 		},
-		() => 10451,
+		() => 30194,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const n1 = p._GetNode(1);
@@ -6779,7 +6780,7 @@ self.C3_ExpressionFuncs = [
 		() => 60,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => (and("Счёт игрока: ", v0.GetValue()) + "");
+			return () => (and("", v0.GetValue()) + "");
 		},
 		() => 1800,
 		() => 800,
@@ -6804,8 +6805,6 @@ self.C3_ExpressionFuncs = [
 			const n2 = p._GetNode(2);
 			return () => n0.ExpObject(f1(0, n2.ExpObject()));
 		},
-		() => 8,
-		() => 5,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 95);
@@ -6941,6 +6940,7 @@ self.C3_ExpressionFuncs = [
 		() => 500,
 		() => 1100,
 		() => 1400,
+		() => 5,
 		() => 1700,
 		() => 566,
 		() => 517,
