@@ -6380,8 +6380,8 @@ const C3 = self.C3;
 self.C3_GetObjectRefTable = function () {
 	return [
 		C3.Plugins.Sprite,
-		C3.Plugins.Text,
 		C3.Behaviors.MoveTo,
+		C3.Plugins.Text,
 		C3.Plugins.Button,
 		C3.Plugins.Arr,
 		C3.Plugins.Json,
@@ -6397,52 +6397,57 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.System.Exps.loopindex,
+		C3.Plugins.System.Acts.SetVar,
+		C3.Plugins.System.Acts.CreateObject,
+		C3.Plugins.System.Cnds.PickLastCreated,
+		C3.Plugins.System.Cnds.PickByComparison,
+		C3.Plugins.Sprite.Exps.IID,
+		C3.Plugins.Sprite.Acts.SetSize,
+		C3.Plugins.Sprite.Acts.SetPosToObject,
+		C3.Plugins.Sprite.Acts.SetY,
+		C3.Plugins.Sprite.Exps.Y,
+		C3.Plugins.Sprite.Acts.SetInstanceVar,
+		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.AJAX.Cnds.OnComplete,
 		C3.Plugins.Json.Acts.Parse,
 		C3.Plugins.AJAX.Exps.LastData,
-		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.Json.Exps.Get,
 		C3.Plugins.System.Cnds.Compare,
-		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Text.Acts.Destroy,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
+		C3.Plugins.System.Cnds.CompareBoolVar,
+		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Cnds.PickNth,
 		C3.Plugins.System.Cnds.Else,
 		C3.Plugins.System.Acts.StopLoop,
 		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
-		C3.Plugins.Sprite.Acts.SetInstanceVar,
-		C3.Plugins.System.Cnds.PickByComparison,
 		C3.Plugins.Text.Acts.SetBoolInstanceVar,
-		C3.Plugins.Sprite.Acts.SetPosToObject,
-		C3.Plugins.Text.Acts.SetPosToObject,
+		C3.Behaviors.MoveTo.Acts.MoveToObject,
 		C3.Plugins.Text.Exps.Text,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.System.Acts.SubVar,
-		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Sprite.Acts.SetX,
-		C3.Plugins.Sprite.Exps.IID,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerGet,
-		C3.Plugins.System.Acts.CreateObject,
-		C3.Plugins.System.Cnds.PickLastCreated,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Exps.len,
 		C3.Plugins.System.Exps.mid,
-		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Text.Acts.SetInstanceVar,
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.Arr.Exps.Width,
+		C3.Plugins.Text.Acts.SetPosToObject,
 		C3.Plugins.Text.Exps.IID,
 		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Text.Acts.SetX,
 		C3.Plugins.Text.Exps.X,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
+		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.Arr.Cnds.CompareX,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
@@ -6451,8 +6456,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Exps.LayerNumber,
 		C3.Plugins.System.Cnds.PickOverlappingPoint,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
-		C3.Plugins.Sprite.Exps.Y,
-		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.Button.Cnds.OnClicked,
 		C3.Plugins.Spritefont2.Cnds.OnCreated,
 		C3.Plugins.Arr.Acts.JSONLoad,
@@ -6471,12 +6474,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
-		C3.Plugins.Sprite.Acts.SetY,
 		C3.Plugins.Sprite.Acts.StartAnim,
 		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardAnyFetch,
-		C3.Plugins.Sprite.Acts.SetSize,
 		C3.Plugins.Sprite.Acts.MoveToTop
 	];
 };
@@ -6484,9 +6485,9 @@ self.C3_JsPropNameTable = [
 	{Используется: 0},
 	{НомерКолоды: 0},
 	{НомерЯчейкиНаДоске: 0},
+	{ДвижениеК: 0},
 	{АктивнаяКарточка: 0},
 	{БукваНаКарточке: 0},
-	{ДвижениеК: 0},
 	{МашинаБота: 0},
 	{ОчкиСобранногоСлова: 0},
 	{МашинаИгрока: 0},
@@ -6504,6 +6505,8 @@ self.C3_JsPropNameTable = [
 	{Array: 0},
 	{ТекстурныйШрифт: 0},
 	{СлотПокупкиДжокера: 0},
+	{ОчередьНаУдаление: 0},
+	{ДекоративныйСлотКолоды: 0},
 	{НепопулярныеГласные: 0},
 	{НепопулярныеГласныеJSON: 0},
 	{НепопулярныеСогласные: 0},
@@ -6569,6 +6572,10 @@ self.C3_JsPropNameTable = [
 	{СчётчикВыгрузкиМассивовБукв: 0},
 	{КоличествоУдалённыхКарточек: 0},
 	{ТекущееСловоГлобал: 0},
+	{ТестФлаг: 0},
+	{РазрешениеНаНажатиеКарточек: 0},
+	{i: 0},
+	{j: 0},
 	{ИндексВероятности: 0},
 	{MinНомерСвободнойЯчейки: 0},
 	{ТакогоСловаНет: 0},
@@ -6701,6 +6708,33 @@ self.C3_ExpressionFuncs = [
 			return () => f0();
 		},
 		() => 7,
+		() => "j",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (v0.GetValue() - 2);
+		},
+		() => "",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject();
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => v0.GetValue();
+		},
+		() => 150,
+		() => 180,
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => (n0.ExpObject() + (15 * ((v1.GetValue() - 1) - v2.GetValue())));
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => ((v0.GetValue() - 2) - v1.GetValue());
+		},
 		() => 6,
 		p => {
 			const n0 = p._GetNode(0);
@@ -6709,21 +6743,12 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 17,
 		() => 4,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => v0.GetValue();
-		},
 		() => "Тачи по объектам в процессе игры",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
 		},
 		() => 8,
-		() => "",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject();
-		},
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
@@ -6820,6 +6845,15 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpInstVar() - 1);
+		},
+		() => 0.6,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => ((n0.ExpObject() - 883) / 15);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 15);
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
