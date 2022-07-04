@@ -6468,7 +6468,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerPosition,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
+		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
+		C3.Plugins.Sprite.Acts.LoadURL,
+		C3.Plugins.Sprite.Acts.SetVisible,
+		C3.Plugins.Text.Acts.SetHAlign,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
@@ -6476,7 +6480,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardAnyFetch,
-		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Sprite.Acts.MoveToTop
 	];
 };
@@ -6592,6 +6595,7 @@ self.C3_JsPropNameTable = [
 	{Y: 0},
 	{ПолученныеОчки: 0},
 	{МестоИгрока: 0},
+	{МестоОтображаемогоИгрокаВТаблице: 0},
 	{ТурнирПройден: 0},
 	{ПобедыВнутриТурнира: 0},
 	{КоличествоПройденныхТурниров: 0},
@@ -6934,11 +6938,61 @@ self.C3_ExpressionFuncs = [
 		() => "global@score",
 		() => "default",
 		() => 100,
-		() => 10,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(0, "id");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(1, "id");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(2, "id");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(3, "id");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(4, "id");
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => ((v0.GetValue() - 3) + f1());
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0(v1.GetValue(), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0(v1.GetValue(), "name");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => and(" Счёт: ", f0(v1.GetValue(), "score"));
+		},
+		() => ". . .",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => f0(f1(), "avatar");
+		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => f0(f1(), "name");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => and(" Счёт: ", f0(f1(), "score"));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6985,6 +7039,7 @@ self.C3_ExpressionFuncs = [
 		() => "КнопкиМеню",
 		() => "Вы прошли турнир!\n\nНажмите на экран, чтобы продолжить",
 		() => "leaders",
+		() => 10,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Гонка #", (v0.GetValue() + 1)) + "");
