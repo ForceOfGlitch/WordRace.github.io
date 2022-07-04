@@ -6465,8 +6465,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetFontColor,
 		C3.Plugins.Text.Acts.AppendText,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
-		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerPosition,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
+		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerPosition,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
 		C3.Plugins.Sprite.Acts.LoadURL,
@@ -6936,7 +6936,7 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "global@score",
 		() => "default",
-		() => 90,
+		() => 99,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, "id");
