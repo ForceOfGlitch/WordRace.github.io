@@ -6461,16 +6461,14 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Acts.JSONLoad,
 		C3.Plugins.Spritefont2.Acts.SetCharacterWidth,
 		C3.Plugins.Arr.Exps.Height,
+		C3.Plugins.Text.Acts.SetFontSize,
+		C3.Plugins.Text.Acts.SetFontColor,
+		C3.Plugins.Text.Acts.AppendText,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerPosition,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
-		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
-		C3.Plugins.Sprite.Acts.LoadURL,
-		C3.Plugins.Text.Acts.AppendText,
-		C3.Plugins.Sprite.Acts.SetVisible,
-		C3.Plugins.Text.Acts.SetHAlign,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
@@ -6478,6 +6476,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardAnyFetch,
+		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Sprite.Acts.MoveToTop
 	];
 };
@@ -6507,6 +6506,7 @@ self.C3_JsPropNameTable = [
 	{СлотПокупкиДжокера: 0},
 	{ОчередьНаУдаление: 0},
 	{ДекоративныйСлотКолоды: 0},
+	{ПоявляющийсяТекст: 0},
 	{НепопулярныеГласные: 0},
 	{НепопулярныеГласныеJSON: 0},
 	{НепопулярныеСогласные: 0},
@@ -6555,6 +6555,7 @@ self.C3_JsPropNameTable = [
 	{AJAX: 0},
 	{КнопкаСпрайт: 0},
 	{СсылкиНаФотоПрофилей: 0},
+	{ДвижениеК2: 0},
 	{АватарыТурниры: 0},
 	{АватарыРекорды: 0},
 	{true: 0},
@@ -6587,8 +6588,10 @@ self.C3_JsPropNameTable = [
 	{ИндексСлотаПробела: 0},
 	{КарточкиЗакончились: 0},
 	{СуммаБонусаЗаБуквы: 0},
+	{Х: 0},
+	{Y: 0},
+	{ПолученныеОчки: 0},
 	{МестоИгрока: 0},
-	{МестоОтображаемогоИгрокаВТаблице: 0},
 	{ТурнирПройден: 0},
 	{ПобедыВнутриТурнира: 0},
 	{КоличествоПройденныхТурниров: 0},
@@ -6883,12 +6886,24 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
-			return () => (n0.ExpObject() + n1.ExpInstVar());
+			return () => (n0.ExpObject() + (n1.ExpInstVar() * 1.535));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 200);
 		},
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			return () => (n0.ExpObject() + (n1.ExpInstVar() * 0.8));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() * 0.8);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpInstVar_Family();
 		},
 		() => "{\"c2array\":true,\"size\":[2,27,1],\"data\":[[[5],[6],[7],[8],[9],[10],[11],[12],[13],[14],[15],[16],[17],[18],[19],[20],[21],[22],[23],[24],[25],[26],[27],[28],[30],[32],[33]],[[\"l'\"],[\"Ii|\"],[\":!\"],[\".,;\"],[\"`\"],[\"j[]\"],[\"()\"],[\"1-\\\"\"],[\"r°*\"],[\"ft\\\\г\"],[\"/\"],[\"з\"],[\"kчь\"],[\"Jachnsuxyz035689?$авийкнпстухэ\"],[\"bdgopqv2Гборя\"],[\"FLPe7Реёц\"],[\"ERUY4=£ЕЁИЧЬЯл\"],[\"BCHNSV~#&+>БВЗЙНСУЭм\"],[\"DKXZ<КПХдъ\"],[\"AT_АЛТы\"],[\"OQ€ОЦ\"],[\"GMМшю\"],[\"wД\"],[\"mФЪЫжфщ\"],[\"@Ш\"],[\"WЮ\"],[\"ЖЩ\"]]]}",
 		() => " ",
@@ -6903,64 +6918,27 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => n0.ExpObject(0, f1());
 		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 30);
+		},
+		() => 50,
+		() => 5,
+		() => 36,
+		() => -717750023016447,
+		() => "+",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (v0.GetValue() - 100);
+		},
 		() => "global@score",
 		() => "default",
 		() => 100,
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(0, "id");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(1, "id");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(2, "id");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(3, "id");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0(4, "id");
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => ((v0.GetValue() - 3) + f1());
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			return () => f0(v1.GetValue(), "avatar");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			return () => f0(v1.GetValue(), "name");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			return () => and(" Счёт: ", f0(v1.GetValue(), "score"));
-		},
-		() => ". . .",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1(), "avatar");
-		},
+		() => 10,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => f0(f1(), "name");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => and(" Счёт: ", f0(f1(), "score"));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6974,7 +6952,6 @@ self.C3_ExpressionFuncs = [
 		() => 500,
 		() => 1100,
 		() => 1400,
-		() => 5,
 		() => 1700,
 		() => 566,
 		() => 517,
@@ -7008,7 +6985,6 @@ self.C3_ExpressionFuncs = [
 		() => "КнопкиМеню",
 		() => "Вы прошли турнир!\n\nНажмите на экран, чтобы продолжить",
 		() => "leaders",
-		() => 10,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Гонка #", (v0.GetValue() + 1)) + "");
@@ -7024,10 +7000,6 @@ self.C3_ExpressionFuncs = [
 		() => "//i.mycdn.me/i?r=AzEOxUXG5QgodWC3x6hM10CkUezvYWLL1KrPZh8lYbCju13tPiX0ITqRH0fdbuWpYBI",
 		() => "https://i.mycdn.me/i?r=AyH4iRPQ2q0otWIFepML2LxRa3fr1ffGVT9RE1Y1YTCVKg",
 		() => "//i.mycdn.me/i?r=AzEPZsRbOZEKgBhR0XGMT1RkpUPQJfJNv2AtvO0JyOniDKaKTM5SRkZCeTgDn6uOyic&dpr=2",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpInstVar_Family();
-		},
 		() => 210,
 		() => 265,
 		() => 665,
