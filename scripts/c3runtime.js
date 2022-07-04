@@ -6473,7 +6473,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Plugins.Text.Acts.SetHAlign,
-		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
