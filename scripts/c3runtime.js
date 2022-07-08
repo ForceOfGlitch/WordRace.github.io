@@ -6394,6 +6394,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SetLayerVisible,
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.AJAX.Acts.RequestFile,
+		C3.Plugins.Spritefont2.Acts.SetText,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.System.Exps.loopindex,
@@ -6708,6 +6709,10 @@ self.C3_ExpressionFuncs = [
 		() => "noPopularGlas",
 		() => "popularSogl",
 		() => "popularGlas",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("Цель: ", v0.GetValue()) + "");
+		},
 		() => "i",
 		() => 0,
 		() => 2,
@@ -6891,7 +6896,8 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
-			return () => (n0.ExpObject() + (n1.ExpInstVar() * 1.535));
+			const v2 = p._GetNode(2).GetVar();
+			return () => (n0.ExpObject() + (n1.ExpInstVar() * (1535 / v2.GetValue())));
 		},
 		p => {
 			const n0 = p._GetNode(0);
