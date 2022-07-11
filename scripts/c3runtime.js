@@ -6945,7 +6945,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (f0(15, 45) / 10);
+			return () => f0(15, 45);
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
