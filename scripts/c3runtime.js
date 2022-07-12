@@ -6948,7 +6948,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => Math.floor(f0(4, 7));
+			return () => Math.floor(f0(1, 4));
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -6968,6 +6968,10 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(7, 15);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => Math.floor(f0(4, 7));
 		},
 		() => "global@score",
 		() => "default",
