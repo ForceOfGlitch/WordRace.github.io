@@ -6491,6 +6491,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Exps.Text,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.System.Acts.SubVar,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerSet,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
+		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
@@ -6503,16 +6506,13 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Exps.Width,
 		C3.Plugins.Text.Acts.SetPosToObject,
 		C3.Plugins.Text.Exps.IID,
-		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Text.Acts.SetX,
 		C3.Plugins.Text.Exps.X,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Plugins.Arr.Cnds.CompareX,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
-		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
-		C3.Plugins.Eponesh_GameScore.Acts.PlayerSet,
 		C3.Plugins.Text.Exps.LayerNumber,
 		C3.Plugins.System.Cnds.PickOverlappingPoint,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
@@ -6633,6 +6633,7 @@ self.C3_JsPropNameTable = [
 	{ПустаяСтрока: 0},
 	{КоличествоКолод: 0},
 	{МаксимальнаяДлинаСлова: 0},
+	{ЦенаДжокера: 0},
 	{ВместимостьОднойКолоды: 0},
 	{СчётчикБуквНаПоле: 0},
 	{БотГотовСобратьСлово: 0},
@@ -6858,6 +6859,20 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject(f1());
 		},
 		() => -1,
+		() => "coins",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => add(f0("coins"), 15);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 20);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 150);
+		},
+		() => 15,
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
@@ -6875,6 +6890,11 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0("coins");
 		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => subtract(f0("coins"), 15);
+		},
+		() => -15,
 		() => "*",
 		() => "ФункцииПоСловам/Карточкам",
 		p => {
@@ -7149,7 +7169,6 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() + 30);
 		},
 		() => "Вы прошли турнир! + 50 монет\n\nНажмите на экран, чтобы продолжить",
-		() => "coins",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 50);
