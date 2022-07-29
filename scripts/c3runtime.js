@@ -6451,13 +6451,12 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.AJAX,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.System.Acts.SetLayerVisible,
-		C3.Plugins.System.Acts.AddVar,
+		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerGet,
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.AJAX.Acts.RequestFile,
 		C3.Plugins.Spritefont2.Acts.SetText,
 		C3.Plugins.System.Acts.SetBoolVar,
-		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.System.Exps.loopindex,
@@ -6470,6 +6469,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetY,
 		C3.Plugins.Sprite.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetInstanceVar,
+		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.System.Exps.random,
@@ -6510,6 +6510,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Exps.X,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
+		C3.Plugins.System.Cnds.While,
 		C3.Plugins.Arr.Cnds.CompareX,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
@@ -6652,15 +6653,20 @@ self.C3_JsPropNameTable = [
 	{ВероятностьПоявленияДжокера: 0},
 	{i: 0},
 	{j: 0},
-	{ИндексВероятности: 0},
 	{MinНомерСвободнойЯчейки: 0},
 	{ТакогоСловаНет: 0},
 	{ReturnФункции: 0},
 	{СловоДляСравнения: 0},
 	{ЕстьЛиРасхождение: 0},
+	{ИндексВероятности: 0},
 	{ДобавилиЛиБукву: 0},
 	{ЕстьЛиПробел: 0},
 	{ИндексСлотаПробела: 0},
+	{СтрокаБуквТекущихКарточек: 0},
+	{ТекущаяБукваНаКарточке: 0},
+	{КолодаТекущейБуквыНаКарточке: 0},
+	{ОпределёнДубликат: 0},
+	{УчтенаТекущаяКарточка: 0},
 	{КарточкиЗакончились: 0},
 	{СуммаБонусаЗаБуквы: 0},
 	{Х: 0},
@@ -6669,6 +6675,8 @@ self.C3_JsPropNameTable = [
 	{ОжиданиеБота: 0},
 	{ДобавляемыеОчки: 0},
 	{ДлинаСобранногоСлова: 0},
+	{СозданнаяБукваНаКарточке: 0},
+	{КолодаСозданнойБуквыНаКарточке: 0},
 	{МестоИгрока: 0},
 	{МестоОтображаемогоИгрокаВТаблице: 0},
 	{ТурнирПройден: 0},
@@ -6779,7 +6787,7 @@ self.C3_ExpressionFuncs = [
 		() => 1,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (Math.floor(divide(f0("tournamentscount"), 6)) * 100);
+			return () => (500 + (Math.floor(divide(f0("tournamentscount"), 6)) * 100));
 		},
 		() => "Тачи по объектам после игры",
 		() => "words",
@@ -6847,6 +6855,7 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject((and("", f1()) + ".data"));
 		},
 		() => 17,
+		() => 0.02,
 		() => "Тачи по объектам в процессе игры",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6976,6 +6985,20 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 15);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("i");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => f0(v1.GetValue(), f2("j"), 1);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() % 2);
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
