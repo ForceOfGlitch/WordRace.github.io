@@ -3534,20 +3534,6 @@ SetWebFont(familyName,cssUrl){console.warn("[Text] 'Set web font' action is depr
 }
 
 {
-'use strict';{const C3=self.C3;const DOM_COMPONENT_ID="button";C3.Plugins.Button=class ButtonPlugin extends C3.SDKDOMPluginBase{constructor(opts){super(opts,DOM_COMPONENT_ID);this.AddElementMessageHandler("click",(sdkInst,e)=>sdkInst._OnClick(e))}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.Button.Type=class ButtonType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
-{const C3=self.C3;const C3X=self.C3X;const TYPE=0;const TEXT=1;const TOOLTIP=2;const INITIALLY_VISIBLE=3;const ENABLE=4;const AUTO_FONT_SIZE=5;const CHECKED=6;const ID=7;const CLASS_NAME=8;const DOM_COMPONENT_ID="button";C3.Plugins.Button.Instance=class ButtonInstance extends C3.SDKDOMInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._text="OK";this._isCheckbox=false;this._isChecked=false;this._title="";this._id="";this._className="";this._isEnabled=true;this._autoFontSize=
-true;if(properties){this._isCheckbox=properties[TYPE]===1;this._text=properties[TEXT];this._title=properties[TOOLTIP];this.GetWorldInfo().SetVisible(properties[INITIALLY_VISIBLE]);this._isEnabled=properties[ENABLE];this._autoFontSize=properties[AUTO_FONT_SIZE];this._isChecked=properties[CHECKED];this._id=properties[ID];this._className=properties[CLASS_NAME]}this.CreateElement({"id":this._id,"className":this._className})}Release(){super.Release()}GetElementState(){return{"text":this._text,"isCheckbox":this._isCheckbox,
-"isChecked":this._isChecked,"title":this._title,"isVisible":this.GetWorldInfo().IsVisible(),"isEnabled":this._isEnabled}}async _OnClick(e){this._isChecked=e["isChecked"];this.DispatchScriptEvent("click",true);await this.TriggerAsync(C3.Plugins.Button.Cnds.OnClicked)}_SetText(text){if(this._text===text)return;this._text=text;this.UpdateElementState()}_GetText(){return this._text}_SetTooltip(title){if(this._title===title)return;this._title=title;this.UpdateElementState()}_GetTooltip(){return this._title}_SetEnabled(e){e=
-!!e;if(this._isEnabled===e)return;this._isEnabled=e;this.UpdateElementState()}_IsEnabled(){return this._isEnabled}_SetChecked(c){if(!this._isCheckbox)return;c=!!c;if(this._isChecked===c)return;this._isChecked=c;this.UpdateElementState()}_IsChecked(){return this._isChecked}Draw(renderer){}SaveToJson(){return{"text":this._text,"checked":this._isChecked,"title":this._title,"enabled":this._isEnabled}}LoadFromJson(o){this._text=o["text"];this._isChecked=o["checked"];this._title=o["title"];this._isEnabled=
-o["enabled"];this.UpdateElementState()}GetPropertyValueByIndex(index){switch(index){case TEXT:return this._text;case TOOLTIP:return this._title;case ENABLE:return this._isEnabled;case AUTO_FONT_SIZE:return this._autoFontSize;case CHECKED:return this._isChecked}}SetPropertyValueByIndex(index,value){switch(index){case TEXT:if(this._text===value)return;this._text=value;this.UpdateElementState();break;case TOOLTIP:if(this._title===value)return;this._title=value;this.UpdateElementState();break;case ENABLE:if(this._isEnabled===
-!!value)return;this._isEnabled=!!value;this.UpdateElementState();break;case AUTO_FONT_SIZE:this._autoFontSize=!!value;break;case CHECKED:if(this._isChecked===!!value)return;this._isChecked=!!value;this.UpdateElementState();break}}GetDebuggerProperties(){const Acts=C3.Plugins.Button.Acts;const prefix="plugins.button";return[{title:prefix+".name",properties:[{name:prefix+".properties.text.name",value:this._text,onedit:v=>this.CallAction(Acts.SetText,v)},{name:prefix+".properties.enabled.name",value:this._isEnabled,
-onedit:v=>this.CallAction(Acts.SetEnabled,v)},{name:prefix+".properties.checked.name",value:this._isChecked,onedit:v=>this.CallAction(Acts.SetChecked,v)}]}]}GetScriptInterfaceClass(){return self.IButtonInstance}};const map=new WeakMap;self.IButtonInstance=class IButtonInstance extends self.IDOMInstance{constructor(){super();map.set(this,self.IInstance._GetInitInst().GetSdkInstance())}set text(str){C3X.RequireString(str);map.get(this)._SetText(str)}get text(){return map.get(this)._GetText()}set tooltip(str){C3X.RequireString(str);
-map.get(this)._SetTooltip(str)}get tooltip(){return map.get(this)._GetTooltip()}set isEnabled(e){map.get(this)._SetEnabled(e)}get isEnabled(){return map.get(this)._IsEnabled()}set isChecked(c){map.get(this)._SetChecked(c)}get isChecked(){return map.get(this)._IsChecked()}}}{const C3=self.C3;C3.Plugins.Button.Cnds={OnClicked(){return true},IsChecked(){return this._isChecked},CompareText(str,caseSensitive){if(caseSensitive)return this._text===str;else return C3.equalsNoCase(this._text,str)}}}
-{const C3=self.C3;C3.Plugins.Button.Acts={SetText(text){this._SetText(text)},SetTooltip(title){this._SetTooltip(title)},SetChecked(c){this._SetChecked(c!==0)},ToggleChecked(){if(!this._isCheckbox)return;this._isChecked=!this._isChecked;this.UpdateElementState()}}}{const C3=self.C3;C3.Plugins.Button.Exps={Text(){return this._text}}};
-
-}
-
-{
 'use strict';{const C3=self.C3;C3.Plugins.Arr=class ArrayPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.Arr.Type=class ArrayType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
 {const C3=self.C3;const C3X=self.C3X;const IInstance=self.IInstance;function ResizeArray(arr,len,data){if(len<arr.length)C3.truncateArray(arr,len);else if(len>arr.length)if(typeof data==="function")for(let i=arr.length;i<len;++i)arr.push(data());else for(let i=arr.length;i<len;++i)arr.push(data)}C3.Plugins.Arr.Instance=class ArrayInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst);this._cx=10;this._cy=1;this._cz=1;this._arr=null;this._forX=[];this._forY=[];this._forZ=[];this._forDepth=
 -1;if(properties){this._cx=properties[0];this._cy=properties[1];this._cz=properties[2]}this._arr=C3.MakeFilledArray(this._cx,()=>C3.MakeFilledArray(this._cy,()=>C3.MakeFilledArray(this._cz,0)))}Release(){this._arr=null;super.Release()}At(x,y,z){x=Math.floor(x);y=Math.floor(y);z=Math.floor(z);if(x>=0&&x<this._cx&&y>=0&&y<this._cy&&z>=0&&z<this._cz)return this._arr[x][y][z];else return 0}Set(x,y,z,val){x=Math.floor(x);y=Math.floor(y);z=Math.floor(z);if(x>=0&&x<this._cx&&y>=0&&y<this._cy&&z>=0&&z<this._cz)this._arr[x][y][z]=
@@ -6405,6 +6391,30 @@ url,method,buffer)},SetTimeout(t){this._timeout=t*1E3},SetHeader(n,v){this._next
 }
 
 {
+'use strict';{const C3=self.C3;C3.Plugins.Browser=class BrowserPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.Browser.Type=class BrowserType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const DOM_COMPONENT_ID="browser";C3.Plugins.Browser.Instance=class BrowserInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._initLocationStr="";this._isOnline=false;this._referrer="";this._docTitle="";this._isCookieEnabled=false;this._screenWidth=0;this._screenHeight=0;this._windowOuterWidth=0;this._windowOuterHeight=0;this._isConstructArcade=false;this.AddDOMMessageHandlers([["online-state",e=>this._OnOnlineStateChanged(e)],["backbutton",
+()=>this._OnBackButton()],["sw-message",e=>this._OnSWMessage(e)],["hashchange",e=>this._OnHashChange(e)]]);const rt=this.GetRuntime().Dispatcher();this._disposables=new C3.CompositeDisposable(C3.Disposable.From(rt,"afterfirstlayoutstart",()=>this._OnAfterFirstLayoutStart()),C3.Disposable.From(rt,"window-resize",()=>this._OnWindowResize()),C3.Disposable.From(rt,"suspend",()=>this._OnSuspend()),C3.Disposable.From(rt,"resume",()=>this._OnResume()));this._runtime.AddLoadPromise(this.PostToDOMAsync("get-initial-state",
+{"exportType":this._runtime.GetExportType()}).then(data=>{this._initLocationStr=data["location"];this._isOnline=data["isOnline"];this._referrer=data["referrer"];this._docTitle=data["title"];this._isCookieEnabled=data["isCookieEnabled"];this._screenWidth=data["screenWidth"];this._screenHeight=data["screenHeight"];this._windowOuterWidth=data["windowOuterWidth"];this._windowOuterHeight=data["windowOuterHeight"];this._isConstructArcade=data["isConstructArcade"]}))}Release(){super.Release()}_OnAfterFirstLayoutStart(){this.PostToDOM("ready-for-sw-messages")}async _OnOnlineStateChanged(e){const isOnline=
+!!e["isOnline"];if(this._isOnline===isOnline)return;this._isOnline=isOnline;if(this._isOnline)await this.TriggerAsync(C3.Plugins.Browser.Cnds.OnOnline);else await this.TriggerAsync(C3.Plugins.Browser.Cnds.OnOffline)}async _OnWindowResize(){await this.TriggerAsync(C3.Plugins.Browser.Cnds.OnResize)}_OnSuspend(){this.Trigger(C3.Plugins.Browser.Cnds.OnPageHidden)}_OnResume(){this.Trigger(C3.Plugins.Browser.Cnds.OnPageVisible)}async _OnBackButton(){await this.TriggerAsync(C3.Plugins.Browser.Cnds.OnBackButton)}_OnSWMessage(e){const messageType=
+e["type"];if(messageType==="downloading-update")this.Trigger(C3.Plugins.Browser.Cnds.OnUpdateFound);else if(messageType==="update-ready"||messageType==="update-pending")this.Trigger(C3.Plugins.Browser.Cnds.OnUpdateReady);else if(messageType==="offline-ready")this.Trigger(C3.Plugins.Browser.Cnds.OnOfflineReady)}_OnHashChange(e){this._initLocationStr=e["location"];this.Trigger(C3.Plugins.Browser.Cnds.OnHashChange)}GetDebuggerProperties(){const prefix="plugins.browser.debugger";return[{title:"plugins.browser.name",
+properties:[{name:prefix+".user-agent",value:navigator.userAgent},{name:prefix+".is-online",value:this._isOnline},{name:prefix+".is-fullscreen",value:this._runtime.GetCanvasManager().IsDocumentFullscreen()}]}]}}}
+{const C3=self.C3;C3.Plugins.Browser.Cnds={IsOnline(){return this._isOnline},OnOnline(){return true},OnOffline(){return true},OnResize(){return true},CookiesEnabled(){return this._isCookieEnabled},IsFullscreen(){return this._runtime.GetCanvasManager().IsDocumentFullscreen()},OnBackButton(){return true},IsPortraitLandscape(p){const lastInnerWidth=this._runtime.GetCanvasManager().GetLastWidth();const lastInnerHeight=this._runtime.GetCanvasManager().GetLastHeight();const current=lastInnerWidth<=lastInnerHeight?
+0:1;return current===p},OnUpdateFound(){return true},OnUpdateReady(){return true},OnOfflineReady(){return true},OnHashChange(){return true},PageVisible(){return!this._runtime.IsSuspended()},OnPageHidden(){return true},OnPageVisible(){return true},HasJava(){return false},IsDownloadingUpdate(){return false},OnMenuButton(){return false},OnSearchButton(){return false},IsMetered(){return false},IsCharging(){return true},SupportsFullscreen(){return true}}}
+{const C3=self.C3;const ORIENTATIONS=["portrait","landscape","portrait-primary","portrait-secondary","landscape-primary","landscape-secondary"];C3.Plugins.Browser.Acts={Alert(message){this.PostToDOM("alert",{"message":message.toString()})},Close(){if(this._isConstructArcade)return;if(this._runtime.IsDebug())self.C3Debugger.CloseWindow();else this.PostToDOM("close")},Focus(){this.PostToDOM("set-focus",{"isFocus":true})},Blur(){this.PostToDOM("set-focus",{"isFocus":false})},GoBack(){if(this._isConstructArcade)return;
+this.PostToDOM("navigate",{"type":"back"})},GoForward(){if(this._isConstructArcade)return;this.PostToDOM("navigate",{"type":"forward"})},GoHome(){},Reload(){if(this._isConstructArcade)return;if(this._runtime.IsDebug())this._runtime.PostToDebugger({"type":"reload"});else this.PostToDOM("navigate",{"type":"reload"})},GoToURL(url,target){this._PostToDOMMaybeSync("navigate",{"type":"url","url":url,"target":target,"exportType":this._runtime.GetExportType()})},GoToURLWindow(url,tag){this._PostToDOMMaybeSync("navigate",
+{"type":"new-window","url":url,"tag":tag,"exportType":this._runtime.GetExportType()})},RequestFullScreen(mode,navUi){if(mode>=2)mode+=1;if(mode===6)mode=2;if(mode===1)mode=0;const modeStr=C3.CanvasManager._FullscreenModeNumberToString(mode);this._runtime.GetCanvasManager().SetDocumentFullscreenMode(modeStr);this._PostToDOMMaybeSync("request-fullscreen",{"navUI":navUi})},CancelFullScreen(){this._PostToDOMMaybeSync("exit-fullscreen")},Vibrate(pattern){const arr=pattern.split(",");for(let i=0,len=arr.length;i<
+len;++i)arr[i]=parseInt(arr[i],10);this._PostToDOMMaybeSync("vibrate",{"pattern":arr})},async InvokeDownload(url,filename){if(!url||!filename)return;const urlToDownload=await this._runtime.GetAssetManager().GetProjectFileUrl(url);this._runtime.InvokeDownload(urlToDownload,filename)},InvokeDownloadString(str,mimeType,filename){if(!filename)return;const dataUri=`data:${mimeType},${encodeURIComponent(str)}`;this._runtime.InvokeDownload(dataUri,filename)},ConsoleLog(type,msg){msg=msg.toString();if(type===
+0)console.log(msg);else if(type===1)console.warn(msg);else if(type===2)console.error(msg)},ConsoleGroup(name){console.group(name)},ConsoleGroupEnd(){console.groupEnd()},ExecJs(jsStr){try{eval(jsStr)}catch(err){console.error("Error executing JavaScript: ",err)}},LockOrientation(o){o=Math.floor(o);if(o<0||o>=ORIENTATIONS.length)return;const orientation=ORIENTATIONS[o];this._PostToDOMMaybeSync("lock-orientation",{"orientation":orientation})},UnlockOrientation(){this._PostToDOMMaybeSync("unlock-orientation")},
+LoadStyleSheet(url){this._runtime.GetAssetManager().LoadStyleSheet(url)},SetHash(h){this.PostToDOM("set-hash",{"hash":h})}}}
+{const C3=self.C3;C3.Plugins.Browser.Exps={URL(){if(this._runtime.IsInWorker())return this._initLocationStr;else return location.toString()},Protocol(){if(this._runtime.IsInWorker())return(new URL(this._initLocationStr)).protocol;else return location.protocol},Domain(){if(this._runtime.IsInWorker())return(new URL(this._initLocationStr)).hostname;else return location.hostname},Port(){if(this._runtime.IsInWorker())return(new URL(this._initLocationStr)).port;else return location.port},PathName(){if(this._runtime.IsInWorker())return(new URL(this._initLocationStr)).pathname;
+else return location.pathname},Hash(){if(this._runtime.IsInWorker())return(new URL(this._initLocationStr)).hash;else return location.hash},QueryString(){if(this._runtime.IsInWorker())return(new URL(this._initLocationStr)).search;else return location.search},QueryParam(param){const search=this._runtime.IsInWorker()?(new URL(this._initLocationStr)).search:location.search;const match=RegExp("[?&]"+param+"=([^&]*)").exec(search);if(match)return decodeURIComponent(match[1].replace(/\+/g," "));else return""},
+Referrer(){return this._referrer},Title(){return this._docTitle},Language(){return navigator.language},Platform(){return navigator.platform},UserAgent(){return navigator.userAgent},ExecJS(jsStr){let result=0;try{result=eval(jsStr)}catch(err){console.error("Error executing JavaScript: ",err)}if(typeof result==="number"||typeof result==="string")return result;if(typeof result==="boolean")return result?1:0;else return 0},Name(){return navigator.appName},Version(){return navigator.appVersion},Product(){return navigator.product},
+Vendor(){return navigator.vendor},BatteryLevel(){return 1},BatteryTimeLeft(){return Infinity},Bandwidth(){const connection=navigator["connection"];if(connection)return connection["downlink"]||connection["downlinkMax"]||connection["bandwidth"]||Infinity;else return Infinity},ConnectionType(){const connection=navigator["connection"];if(connection)return connection["type"]||"unknown";else return"unknown"},DevicePixelRatio(){return self.devicePixelRatio},ScreenWidth(){return this._screenWidth},ScreenHeight(){return this._screenHeight},
+WindowInnerWidth(){return this._runtime.GetCanvasManager().GetLastWidth()},WindowInnerHeight(){return this._runtime.GetCanvasManager().GetLastHeight()},WindowOuterWidth(){return this._windowOuterWidth},WindowOuterHeight(){return this._windowOuterWidth}}};
+
+}
+
+{
 'use strict';{const C3=self.C3;C3.Behaviors.MoveTo=class MoveToBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.MoveTo.Type=class MoveToType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}}}
 {const C3=self.C3;const C3X=self.C3X;const IBehaviorInstance=self.IBehaviorInstance;const PROP_MAX_SPEED=0;const PROP_ACCELERATION=1;const PROP_DECELERATION=2;const PROP_ROTATE_SPEED=3;const PROP_SET_ANGLE=4;const PROP_STOP_ON_SOLIDS=5;const PROP_ENABLED=6;C3.Behaviors.MoveTo.Instance=class MoveToInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._maxSpeed=200;this._acc=600;this._dec=600;this._rotateSpeed=0;this._setAngle=true;this._stopOnSolids=false;
 this._isEnabled=true;this._speed=0;this._movingAngle=this.GetWorldInfo().GetAngle();this._waypoints=[];if(properties){this._maxSpeed=properties[PROP_MAX_SPEED];this._acc=properties[PROP_ACCELERATION];this._dec=properties[PROP_DECELERATION];this._rotateSpeed=C3.toRadians(properties[PROP_ROTATE_SPEED]);this._setAngle=properties[PROP_SET_ANGLE];this._stopOnSolids=properties[PROP_STOP_ON_SOLIDS];this._isEnabled=properties[PROP_ENABLED]}}Release(){super.Release()}SaveToJson(){return{"ms":this._maxSpeed,
@@ -6441,7 +6451,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite,
 		C3.Behaviors.MoveTo,
 		C3.Plugins.Text,
-		C3.Plugins.Button,
 		C3.Plugins.Arr,
 		C3.Plugins.Json,
 		C3.Plugins.Spritefont2,
@@ -6449,6 +6458,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch,
 		C3.Plugins.Eponesh_GameScore,
 		C3.Plugins.AJAX,
+		C3.Plugins.Browser,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.System.Acts.SetLayerVisible,
 		C3.Plugins.System.Acts.SetVar,
@@ -6473,6 +6483,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.System.Exps.random,
+		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.AJAX.Cnds.OnComplete,
 		C3.Plugins.Json.Acts.Parse,
 		C3.Plugins.AJAX.Exps.LastData,
@@ -6494,7 +6505,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSet,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
 		C3.Plugins.Sprite.Exps.X,
-		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.System.Acts.GoToLayout,
@@ -6514,17 +6524,21 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Cnds.CompareX,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
-		C3.Plugins.Text.Exps.LayerNumber,
-		C3.Plugins.System.Cnds.PickOverlappingPoint,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
-		C3.Plugins.Button.Cnds.OnClicked,
 		C3.Plugins.Spritefont2.Cnds.OnCreated,
 		C3.Plugins.Arr.Acts.JSONLoad,
 		C3.Plugins.Spritefont2.Acts.SetCharacterWidth,
 		C3.Plugins.Arr.Exps.Height,
 		C3.Plugins.Text.Acts.SetFontSize,
 		C3.Plugins.Text.Acts.SetFontColor,
+		C3.Plugins.Text.Acts.SetSize,
 		C3.Plugins.Text.Acts.AppendText,
+		C3.Behaviors.MoveTo.Acts.Stop,
+		C3.Plugins.Sprite.Acts.MoveToBottom,
+		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Plugins.Text.Exps.LayerNumber,
+		C3.Plugins.System.Cnds.PickOverlappingPoint,
+		C3.Plugins.Sprite.Cnds.OnCollision,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
@@ -6541,6 +6555,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Cnds.IsAdsLastAdSuccess,
 		C3.Plugins.Text.Acts.SetVisible,
+		C3.Plugins.Touch.Cnds.OnTouchStart,
+		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardAnyFetch,
 		C3.Plugins.Sprite.Acts.MoveToTop
@@ -6558,7 +6574,6 @@ self.C3_JsPropNameTable = [
 	{МашинаИгрока: 0},
 	{Фон: 0},
 	{ФреймКонцаИгры: 0},
-	{КнопкаВернутьМеню: 0},
 	{ДобавлениеНаКолоду: 0},
 	{ОсталосьВКолоде: 0},
 	{ОстатокКолоды: 0},
@@ -6571,9 +6586,13 @@ self.C3_JsPropNameTable = [
 	{ТекстурныйШрифт: 0},
 	{СлотПокупкиДжокера: 0},
 	{ОчередьНаУдаление: 0},
+	{MoveTo: 0},
 	{ДекоративныйСлотКолоды: 0},
 	{ПоявляющийсяТекст: 0},
 	{НаградаЗаСлова: 0},
+	{Дорога: 0},
+	{tag: 0},
+	{Decoration: 0},
 	{НепопулярныеГласные: 0},
 	{НепопулярныеГласныеJSON: 0},
 	{НепопулярныеСогласные: 0},
@@ -6619,13 +6638,13 @@ self.C3_JsPropNameTable = [
 	{СлайдерМагазинаВлево: 0},
 	{СлайдерМагазинаВправо: 0},
 	{Мышь: 0},
-	{test: 0},
 	{Текст: 0},
 	{Тач: 0},
 	{GameScore: 0},
 	{AJAX: 0},
 	{КнопкаСпрайт: 0},
 	{СсылкиНаФотоПрофилей: 0},
+	{Browser: 0},
 	{ДвижениеК2: 0},
 	{АватарыТурниры: 0},
 	{АватарыРекорды: 0},
@@ -6641,7 +6660,6 @@ self.C3_JsPropNameTable = [
 	{СчётБота: 0},
 	{СчётИгрока: 0},
 	{ОчкиНаПоле: 0},
-	{ОтсчётДоНажатия: 0},
 	{ЦельИгрыМетры: 0},
 	{СчётчикВыгрузкиМассивовБукв: 0},
 	{КоличествоУдалённыхКарточек: 0},
@@ -6668,15 +6686,15 @@ self.C3_JsPropNameTable = [
 	{ОпределёнДубликат: 0},
 	{УчтенаТекущаяКарточка: 0},
 	{КарточкиЗакончились: 0},
-	{СуммаБонусаЗаБуквы: 0},
 	{Х: 0},
 	{Y: 0},
 	{ПолученныеОчки: 0},
 	{ОжиданиеБота: 0},
 	{ДобавляемыеОчки: 0},
 	{ДлинаСобранногоСлова: 0},
-	{СозданнаяБукваНаКарточке: 0},
-	{КолодаСозданнойБуквыНаКарточке: 0},
+	{ЧисленностьТекущейПачкиКарточек: 0},
+	{ЦенаОднойКарточки: 0},
+	{СуммаБонусаЗаБуквы: 0},
 	{МестоИгрока: 0},
 	{МестоОтображаемогоИгрокаВТаблице: 0},
 	{ТурнирПройден: 0},
@@ -6813,6 +6831,7 @@ self.C3_ExpressionFuncs = [
 		() => 290,
 		() => 7,
 		() => 430,
+		() => "Тачи по объектам в процессе игры",
 		() => "i",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6851,16 +6870,16 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
+			return () => n0.ExpInstVar();
+		},
+		() => "goalScore",
+		p => {
+			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => n0.ExpObject((and("", f1()) + ".data"));
 		},
 		() => 17,
 		() => 0.02,
-		() => "Тачи по объектам в процессе игры",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpInstVar();
-		},
 		() => 8,
 		p => {
 			const n0 = p._GetNode(0);
@@ -6891,6 +6910,8 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (f0() + 1);
 		},
+		() => 0.3,
+		() => "curScore",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (972 + (n0.ExpObject() * 170));
@@ -6934,6 +6955,7 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10);
 		},
+		() => "playerScore",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("", v0.GetValue()) + "");
@@ -7004,25 +7026,11 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() * 8);
 		},
+		() => "ПризовыеОчки",
 		() => "tournamentscount",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("tournamentscount"), 1);
-		},
-		() => 1000,
-		() => 700,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (and("", v0.GetValue()) + "м");
-		},
-		() => 815,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (v0.GetValue() * 10);
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (and("Бонус: ", v0.GetValue()) + "");
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -7054,6 +7062,8 @@ self.C3_ExpressionFuncs = [
 		() => 50,
 		() => 36,
 		() => -717750023016447,
+		() => 200,
+		() => 100,
 		() => "+",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -7089,6 +7099,39 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.floor(f0(4, 7));
+		},
+		() => -960,
+		() => 271,
+		() => 165,
+		() => -200,
+		() => 2880,
+		() => 960,
+		() => "Animation 2",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => (n0.ExpObject() + (v1.GetValue() * v2.GetValue()));
+		},
+		() => 3.5,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (0.4 * f0("i"));
+		},
+		() => 1000,
+		() => 700,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("", v0.GetValue()) + "м");
+		},
+		() => 815,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (v0.GetValue() * 10);
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("Бонус: ", v0.GetValue()) + "");
 		},
 		() => "global@score",
 		() => "default",
@@ -7157,7 +7200,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0("tournamentscount");
 		},
-		() => 200,
 		() => 500,
 		() => 1100,
 		() => 1400,
@@ -7172,6 +7214,8 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (Math.floor(divide(f0("tournamentscount"), 6)) + 1);
 		},
+		() => 1920,
+		() => 1080,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
@@ -7197,10 +7241,6 @@ self.C3_ExpressionFuncs = [
 			return () => add(f0("coins"), 50);
 		},
 		() => "КнопкиМеню",
-		() => 960,
-		() => 1920,
-		() => 1080,
-		() => 0.3,
 		() => 75,
 		() => 250,
 		() => 128,
