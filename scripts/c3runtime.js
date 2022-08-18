@@ -3663,6 +3663,17 @@ null}}GetSpacingData(){return this._spacingData}SetSpaceWidth(w){if(w<0)w=-1;if(
 }
 
 {
+'use strict';{const C3=self.C3;C3.Plugins.Dictionary=class DictionaryPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.Dictionary.Type=class DictionaryType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const C3X=self.C3X;const IInstance=self.IInstance;C3.Plugins.Dictionary.Instance=class DictionaryInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst);this._data=new Map;this._curKey=""}Release(){this._data.clear();super.Release()}GetAsJsonString(){return JSON.stringify({"c2dictionary":true,"data":C3.MapToObject(this._data)})}GetDataMap(){return this._data}SaveToJson(){return C3.MapToObject(this._data)}LoadFromJson(o){C3.ObjectToMap(o,this._data)}GetDebuggerProperties(){const prefix=
+"plugins.dictionary";return[{title:prefix+".name",properties:[{name:prefix+".debugger.key-count",value:this._data.size},...[...this._data].map(entry=>({name:"$"+entry[0],value:entry[1],onedit:v=>this._data.set(entry[0],v)}))]}]}GetScriptInterfaceClass(){return self.IDictionaryInstance}};const map=new WeakMap;self.IDictionaryInstance=class IDictionaryInstance extends IInstance{constructor(){super();map.set(this,IInstance._GetInitInst().GetSdkInstance())}getDataMap(){return map.get(this).GetDataMap()}}}
+{const C3=self.C3;C3.Plugins.Dictionary.Cnds={CompareValue(key,cmp,val){const x=this._data.get(key);if(typeof x==="undefined")return false;return C3.compare(x,cmp,val)},ForEachKey(){const runtime=this._runtime;const eventSheetManager=runtime.GetEventSheetManager();const currentEvent=runtime.GetCurrentEvent();const solModifiers=currentEvent.GetSolModifiers();const eventStack=runtime.GetEventStack();const oldFrame=eventStack.GetCurrentStackFrame();const newFrame=eventStack.Push(currentEvent);runtime.SetDebuggingEnabled(false);
+for(const key of this._data.keys()){this._curKey=key;eventSheetManager.PushCopySol(solModifiers);currentEvent.Retrigger(oldFrame,newFrame);eventSheetManager.PopSol(solModifiers)}runtime.SetDebuggingEnabled(true);this._curKey="";eventStack.Pop();return false},CompareCurrentValue(cmp,val){const x=this._data.get(this._curKey);if(typeof x==="undefined")return false;return C3.compare(x,cmp,val)},HasKey(key){return this._data.has(key)},IsEmpty(){return this._data.size===0}}}
+{const C3=self.C3;C3.Plugins.Dictionary.Acts={AddKey(key,value){this._data.set(key,value)},SetKey(key,value){if(this._data.has(key))this._data.set(key,value)},DeleteKey(key){this._data.delete(key)},Clear(){this._data.clear()},JSONLoad(json){let o=null;try{o=JSON.parse(json)}catch(err){console.error("[Construct] Error parsing JSON: ",err);return}if(!o["c2dictionary"])return;C3.ObjectToMap(o["data"],this._data)},JSONDownload(filename){const url=URL.createObjectURL(new Blob([this.GetAsJsonString()],
+{type:"application/json"}));this._runtime.InvokeDownload(url,filename)}}}{const C3=self.C3;C3.Plugins.Dictionary.Exps={Get(key){const ret=this._data.get(key);if(typeof ret==="undefined")return 0;else return ret},GetDefault(key,defaultValue){const ret=this._data.get(key);if(typeof ret==="undefined")return defaultValue;else return ret},KeyCount(){return this._data.size},CurrentKey(){return this._curKey},CurrentValue(){return this._data.get(this._curKey)||0},AsJSON(){return this.GetAsJsonString()}}};
+
+}
+
+{
 'use strict';{const C3=self.C3;C3.Plugins.Mouse=class MousePlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}
 {const C3=self.C3;const C3X=self.C3X;C3.Plugins.Mouse.Type=class MouseType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}GetScriptInterfaceClass(){return self.IMouseObjectType}};let mouseObjectType=null;function GetMouseSdkInstance(){return mouseObjectType.GetSingleGlobalInstance().GetSdkInstance()}self.IMouseObjectType=class IMouseObjectType extends self.IObjectClass{constructor(objectType){super(objectType);mouseObjectType=objectType;objectType.GetRuntime()._GetCommonScriptInterfaces().mouse=
 this}getMouseX(layerNameOrNumber){return GetMouseSdkInstance().GetMousePositionForLayer(layerNameOrNumber)[0]}getMouseY(layerNameOrNumber){return GetMouseSdkInstance().GetMousePositionForLayer(layerNameOrNumber)[1]}getMousePosition(layerNameOrNumber){return GetMouseSdkInstance().GetMousePositionForLayer(layerNameOrNumber)}isMouseButtonDown(button){return GetMouseSdkInstance().IsMouseButtonDown(button)}}}
@@ -6445,6 +6456,29 @@ if(!timeline)return;C3.Behaviors.MoveTo.Acts.MoveAlongTimeline.call(this,timelin
 }
 
 {
+'use strict';{const C3=self.C3;C3.Behaviors.Pin=class PinBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.Pin.Type=class PinType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;C3.Behaviors.Pin.Instance=class PinInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._pinInst=null;this._pinUid=-1;this._mode="";this._propSet=new Set;this._pinDist=0;this._pinAngle=0;this._pinImagePoint=0;this._dx=0;this._dy=0;this._dWidth=0;this._dHeight=0;this._dAngle=0;this._dz=0;this._lastKnownAngle=0;this._destroy=false;if(properties)this._destroy=properties[0];const rt=this._runtime.Dispatcher();this._disposables=new C3.CompositeDisposable(C3.Disposable.From(rt,
+"instancedestroy",e=>this._OnInstanceDestroyed(e.instance)),C3.Disposable.From(rt,"afterload",e=>this._OnAfterLoad()))}Release(){this._pinInst=null;super.Release()}_SetPinInst(inst){if(inst){this._pinInst=inst;this._StartTicking2()}else{this._pinInst=null;this._StopTicking2()}}_Pin(objectClass,mode,propList){if(!objectClass)return;const otherInst=objectClass.GetFirstPicked(this._inst);if(!otherInst)return;this._mode=mode;this._SetPinInst(otherInst);const myWi=this._inst.GetWorldInfo();const otherWi=
+otherInst.GetWorldInfo();if(this._mode==="properties"){const propSet=this._propSet;propSet.clear();for(const p of propList)propSet.add(p);this._dx=myWi.GetX()-otherWi.GetX();this._dy=myWi.GetY()-otherWi.GetY();this._dAngle=myWi.GetAngle()-otherWi.GetAngle();this._lastKnownAngle=myWi.GetAngle();this._dz=myWi.GetZElevation()-otherWi.GetZElevation();if(propSet.has("x")&&propSet.has("y")){this._pinAngle=C3.angleTo(otherWi.GetX(),otherWi.GetY(),myWi.GetX(),myWi.GetY())-otherWi.GetAngle();this._pinDist=
+C3.distanceTo(otherWi.GetX(),otherWi.GetY(),myWi.GetX(),myWi.GetY())}if(propSet.has("width-abs"))this._dWidth=myWi.GetWidth()-otherWi.GetWidth();else if(propSet.has("width-scale"))this._dWidth=myWi.GetWidth()/otherWi.GetWidth();if(propSet.has("height-abs"))this._dHeight=myWi.GetHeight()-otherWi.GetHeight();else if(propSet.has("height-scale"))this._dHeight=myWi.GetHeight()/otherWi.GetHeight()}else this._pinDist=C3.distanceTo(otherWi.GetX(),otherWi.GetY(),myWi.GetX(),myWi.GetY())}SaveToJson(){const propSet=
+this._propSet;const mode=this._mode;const ret={"uid":this._pinInst?this._pinInst.GetUID():-1,"m":mode,"d":this._destroy};if(mode==="rope"||mode==="bar")ret["pd"]=this._pinDist;else if(mode==="properties"){ret["ps"]=[...this._propSet];if(propSet.has("imagepoint"))ret["ip"]=this._pinImagePoint;else if(propSet.has("x")&&propSet.has("y")){ret["pa"]=this._pinAngle;ret["pd"]=this._pinDist}else{if(propSet.has("x"))ret["dx"]=this._dx;if(propSet.has("y"))ret["dy"]=this._dy}if(propSet.has("angle")){ret["da"]=
+this._dAngle;ret["lka"]=this._lastKnownAngle}if(propSet.has("width-abs")||propSet.has("width-scale"))ret["dw"]=this._dWidth;if(propSet.has("height-abs")||propSet.has("height-scale"))ret["dh"]=this._dHeight;if(propSet.has("z"))ret["dz"]=this._dz}return ret}LoadFromJson(o){const mode=o["m"];const propSet=this._propSet;propSet.clear();this._pinUid=o["uid"];if(typeof mode==="number"){this._LoadFromJson_Legacy(o);return}this._mode=mode;if(o.hasOwnProperty("d"))this._destroy=!!o["d"];if(mode==="rope"||
+mode==="bar")this._pinDist=o["pd"];else if(mode==="properties"){for(const p of o["ps"])propSet.add(p);if(propSet.has("imagepoint"))this._pinImagePoint=o["ip"];else if(propSet.has("x")&&propSet.has("y")){this._pinAngle=o["pa"];this._pinDist=o["pd"]}else{if(propSet.has("x"))this._dx=o["dx"];if(propSet.has("y"))this._dy=o["dy"]}if(propSet.has("angle")){this._dAngle=o["da"];this._lastKnownAngle=o["lka"]||0}if(propSet.has("width-abs")||propSet.has("width-scale"))this._dWidth=o["dw"];if(propSet.has("height-abs")||
+propSet.has("height-scale"))this._dHeight=o["dh"];if(propSet.has("z"))this._dz=o["dz"]}}_LoadFromJson_Legacy(o){const propSet=this._propSet;const myStartAngle=o["msa"];const theirStartAngle=o["tsa"];const pinAngle=o["pa"];const pinDist=o["pd"];const mode=o["m"];switch(mode){case 0:this._mode="properties";propSet.add("x").add("y").add("angle");this._pinAngle=pinAngle;this._pinDist=pinDist;this._dAngle=myStartAngle-theirStartAngle;this._lastKnownAngle=o["lka"];break;case 1:this._mode="properties";propSet.add("x").add("y");
+this._pinAngle=pinAngle;this._pinDist=pinDist;break;case 2:this._mode="properties";propSet.add("angle");this._dAngle=myStartAngle-theirStartAngle;this._lastKnownAngle=o["lka"];break;case 3:this._mode="rope";this._pinDist=o["pd"];break;case 4:this._mode="bar";this._pinDist=o["pd"];break}}_OnAfterLoad(){if(this._pinUid===-1)this._SetPinInst(null);else{this._SetPinInst(this._runtime.GetInstanceByUID(this._pinUid));this._pinUid=-1}}_OnInstanceDestroyed(inst){if(this._pinInst===inst){this._SetPinInst(null);
+if(this._destroy)this._runtime.DestroyInstance(this._inst)}}Tick2(){const pinInst=this._pinInst;if(!pinInst)return;const pinWi=pinInst.GetWorldInfo();const myInst=this._inst;const myWi=myInst.GetWorldInfo();const mode=this._mode;let bboxChanged=false;if(mode==="rope"||mode==="bar"){const dist=C3.distanceTo(myWi.GetX(),myWi.GetY(),pinWi.GetX(),pinWi.GetY());if(dist>this._pinDist||mode==="bar"&&dist<this._pinDist){const a=C3.angleTo(pinWi.GetX(),pinWi.GetY(),myWi.GetX(),myWi.GetY());myWi.SetXY(pinWi.GetX()+
+Math.cos(a)*this._pinDist,pinWi.GetY()+Math.sin(a)*this._pinDist);bboxChanged=true}}else{const propSet=this._propSet;let v=0;if(propSet.has("imagepoint")){const [newX,newY]=pinInst.GetImagePoint(this._pinImagePoint);if(!myWi.EqualsXY(newX,newY)){myWi.SetXY(newX,newY);bboxChanged=true}}else if(propSet.has("x")&&propSet.has("y")){const newX=pinWi.GetX()+Math.cos(pinWi.GetAngle()+this._pinAngle)*this._pinDist;const newY=pinWi.GetY()+Math.sin(pinWi.GetAngle()+this._pinAngle)*this._pinDist;if(!myWi.EqualsXY(newX,
+newY)){myWi.SetXY(newX,newY);bboxChanged=true}}else{v=pinWi.GetX()+this._dx;if(propSet.has("x")&&v!==myWi.GetX()){myWi.SetX(v);bboxChanged=true}v=pinWi.GetY()+this._dy;if(propSet.has("y")&&v!==myWi.GetY()){myWi.SetY(v);bboxChanged=true}}if(propSet.has("angle")){if(this._lastKnownAngle!==myWi.GetAngle())this._dAngle=C3.clampAngle(this._dAngle+(myWi.GetAngle()-this._lastKnownAngle));v=C3.clampAngle(pinWi.GetAngle()+this._dAngle);if(v!==myWi.GetAngle()){myWi.SetAngle(v);bboxChanged=true}this._lastKnownAngle=
+myWi.GetAngle()}if(propSet.has("width-abs")){v=pinWi.GetWidth()+this._dWidth;if(v!==myWi.GetWidth()){myWi.SetWidth(v);bboxChanged=true}}if(propSet.has("width-scale")){v=pinWi.GetWidth()*this._dWidth;if(v!==myWi.GetWidth()){myWi.SetWidth(v);bboxChanged=true}}if(propSet.has("height-abs")){v=pinWi.GetHeight()+this._dHeight;if(v!==myWi.GetHeight()){myWi.SetHeight(v);bboxChanged=true}}if(propSet.has("height-scale")){v=pinWi.GetHeight()*this._dHeight;if(v!==myWi.GetHeight()){myWi.SetHeight(v);bboxChanged=
+true}}if(propSet.has("z")){v=pinWi.GetZElevation()+this._dz;if(v!==myWi.GetZElevation()){myWi.SetZElevation(v);this._runtime.UpdateRender()}}}if(bboxChanged)myWi.SetBboxChanged()}GetDebuggerProperties(){const prefix="behaviors.pin.debugger";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".is-pinned",value:!!this._pinInst},{name:prefix+".pinned-uid",value:this._pinInst?this._pinInst.GetUID():0}]}]}}}
+{const C3=self.C3;C3.Behaviors.Pin.Cnds={IsPinned(){return!!this._pinInst},WillDestroy(){return this._destroy}}}
+{const C3=self.C3;C3.Behaviors.Pin.Acts={PinByDistance(objectClass,mode){this._Pin(objectClass,mode===0?"rope":"bar")},PinByProperties(objectClass,ex,ey,ea,ew,eh,ez){const propList=[];if(ex)propList.push("x");if(ey)propList.push("y");if(ea)propList.push("angle");if(ez)propList.push("z");if(ew===1)propList.push("width-abs");else if(ew===2)propList.push("width-scale");if(eh===1)propList.push("height-abs");else if(eh===2)propList.push("height-scale");if(propList.length===0)return;this._Pin(objectClass,
+"properties",propList)},PinByImagePoint(objectClass,imgPt,ea,ew,eh,ez){const propList=["imagepoint"];if(ea)propList.push("angle");if(ez)propList.push("z");if(ew===1)propList.push("width-abs");else if(ew===2)propList.push("width-scale");if(eh===1)propList.push("height-abs");else if(eh===2)propList.push("height-scale");this._pinImagePoint=imgPt;this._Pin(objectClass,"properties",propList)},SetPinDistance(d){if(this._mode==="rope"||this._mode==="bar")this._pinDist=Math.max(d,0)},SetDestroy(d){this._destroy=
+d},Unpin(){this._SetPinInst(null);this._mode="";this._propSet.clear();this._pinImagePoint=""},Pin(objectClass,mode){switch(mode){case 0:this._Pin(objectClass,"properties",["x","y","angle"]);break;case 1:this._Pin(objectClass,"properties",["x","y"]);break;case 2:this._Pin(objectClass,"properties",["angle"]);break;case 3:this._Pin(objectClass,"rope");break;case 4:this._Pin(objectClass,"bar");break}}}}{const C3=self.C3;C3.Behaviors.Pin.Exps={PinnedUID(){return this._pinInst?this._pinInst.GetUID():-1}}};
+
+}
+
+{
 const C3 = self.C3;
 self.C3_GetObjectRefTable = function () {
 	return [
@@ -6453,7 +6487,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text,
 		C3.Plugins.Arr,
 		C3.Plugins.Json,
+		C3.Behaviors.Pin,
 		C3.Plugins.Spritefont2,
+		C3.Plugins.Dictionary,
 		C3.Plugins.Mouse,
 		C3.Plugins.Touch,
 		C3.Plugins.Eponesh_GameScore,
@@ -6465,7 +6501,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerGet,
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.AJAX.Acts.RequestFile,
-		C3.Plugins.Spritefont2.Acts.SetText,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.System.Cnds.For,
@@ -6525,10 +6560,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
-		C3.Plugins.Spritefont2.Cnds.OnCreated,
-		C3.Plugins.Arr.Acts.JSONLoad,
-		C3.Plugins.Spritefont2.Acts.SetCharacterWidth,
-		C3.Plugins.Arr.Exps.Height,
+		C3.Plugins.Sprite.Acts.SetPos,
+		C3.Behaviors.Pin.Acts.PinByProperties,
+		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.Text.Acts.SetFontSize,
 		C3.Plugins.Text.Acts.SetFontColor,
 		C3.Plugins.Text.Acts.SetSize,
@@ -6536,30 +6570,35 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.MoveTo.Acts.Stop,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
 		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Plugins.Sprite.Acts.SetVisible,
+		C3.Plugins.Text.Acts.SetVisible,
+		C3.Plugins.Text.Acts.SetPos,
+		C3.Plugins.Text.Acts.MoveToTop,
+		C3.Plugins.Text.Acts.SetVAlign,
+		C3.Plugins.Text.Acts.SetHAlign,
 		C3.Plugins.Text.Exps.LayerNumber,
 		C3.Plugins.System.Cnds.PickOverlappingPoint,
 		C3.Plugins.Sprite.Cnds.OnCollision,
-		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
-		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
 		C3.Plugins.Sprite.Acts.LoadURL,
-		C3.Plugins.Sprite.Acts.SetVisible,
-		C3.Plugins.Text.Acts.SetHAlign,
+		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
+		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
 		C3.Plugins.Sprite.Acts.StartAnim,
+		C3.Plugins.Touch.Cnds.OnTouchStart,
+		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Cnds.IsAdsLastAdSuccess,
-		C3.Plugins.Text.Acts.SetVisible,
-		C3.Plugins.Touch.Cnds.OnTouchStart,
-		C3.Plugins.Browser.Acts.RequestFullScreen,
-		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetch,
-		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardAnyFetch,
-		C3.Plugins.Sprite.Acts.MoveToTop
+		C3.Plugins.Eponesh_GameScore.Acts.PaymentsPurchase,
+		C3.Plugins.Dictionary.Acts.AddKey,
+		C3.Plugins.Eponesh_GameScore.Cnds.OnPaymentsPurchase,
+		C3.Plugins.Eponesh_GameScore.Acts.PaymentsConsume,
+		C3.Plugins.System.Cnds.PickAll
 	];
 };
 self.C3_JsPropNameTable = [
@@ -6571,6 +6610,7 @@ self.C3_JsPropNameTable = [
 	{БукваНаКарточке: 0},
 	{МашинаБота: 0},
 	{ОчкиСобранногоСлова: 0},
+	{tag: 0},
 	{МашинаИгрока: 0},
 	{Фон: 0},
 	{ФреймКонцаИгры: 0},
@@ -6583,7 +6623,6 @@ self.C3_JsPropNameTable = [
 	{СлотПоля: 0},
 	{ТекущееСлово: 0},
 	{Array: 0},
-	{ТекстурныйШрифт: 0},
 	{СлотПокупкиДжокера: 0},
 	{ОчередьНаУдаление: 0},
 	{MoveTo: 0},
@@ -6591,8 +6630,11 @@ self.C3_JsPropNameTable = [
 	{ПоявляющийсяТекст: 0},
 	{НаградаЗаСлова: 0},
 	{Дорога: 0},
-	{tag: 0},
 	{Decoration: 0},
+	{bonusCounter: 0},
+	{Pin: 0},
+	{mask: 0},
+	{РамкаВодителей: 0},
 	{НепопулярныеГласные: 0},
 	{НепопулярныеГласныеJSON: 0},
 	{НепопулярныеСогласные: 0},
@@ -6637,6 +6679,12 @@ self.C3_JsPropNameTable = [
 	{ЗакрытьМагазин: 0},
 	{СлайдерМагазинаВлево: 0},
 	{СлайдерМагазинаВправо: 0},
+	{price: 0},
+	{ПокупкаМагазин: 0},
+	{РисунокМонет: 0},
+	{priceForCoins: 0},
+	{priceForCars: 0},
+	{ТекстМагазина: 0},
 	{Мышь: 0},
 	{Текст: 0},
 	{Тач: 0},
@@ -6668,7 +6716,7 @@ self.C3_JsPropNameTable = [
 	{РазрешениеНаНажатиеКарточек: 0},
 	{ПроизошёлКонецЗаезда: 0},
 	{ИгрокПобедил: 0},
-	{ВероятностьПоявленияДжокера: 0},
+	{СуммарныеБонусныеОчки: 0},
 	{i: 0},
 	{j: 0},
 	{MinНомерСвободнойЯчейки: 0},
@@ -6694,13 +6742,16 @@ self.C3_JsPropNameTable = [
 	{ДлинаСобранногоСлова: 0},
 	{ЧисленностьТекущейПачкиКарточек: 0},
 	{ЦенаОднойКарточки: 0},
-	{СуммаБонусаЗаБуквы: 0},
-	{МестоИгрока: 0},
+	{КоличествоНепустыхПачекКарточекВнутриОчередиНаПолёт: 0},
+	{ПобедаИгрока: 0},
 	{МестоОтображаемогоИгрокаВТаблице: 0},
 	{ТурнирПройден: 0},
-	{ОткрытЛиМагазин: 0},
+	{МестоИгрока: 0},
+	{ОткрытЛиМагазинАвто: 0},
+	{ОткрытЛиМагазинМонет: 0},
 	{ПобедыВнутриТурнира: 0},
 	{КоличествоПройденныхТурниров: 0},
+	{ПокупкаАвто: 0},
 	{НомерТекущегоСоперника: 0}
 ];
 }
@@ -6802,7 +6853,7 @@ function or(l, r)
 }
 
 self.C3_ExpressionFuncs = [
-		() => 1,
+		() => "КонецИгры",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (500 + (Math.floor(divide(f0("tournamentscount"), 6)) * 100));
@@ -6813,11 +6864,8 @@ self.C3_ExpressionFuncs = [
 		() => "noPopularGlas",
 		() => "popularSogl",
 		() => "popularGlas",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (and("Цель: ", v0.GetValue()) + "");
-		},
 		() => 0,
+		() => 1,
 		() => 10,
 		() => 2,
 		() => 30,
@@ -6953,7 +7001,7 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
-			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10);
+			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 100);
 		},
 		() => "playerScore",
 		p => {
@@ -7042,24 +7090,14 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 200);
 		},
-		() => "{\"c2array\":true,\"size\":[2,27,1],\"data\":[[[5],[6],[7],[8],[9],[10],[11],[12],[13],[14],[15],[16],[17],[18],[19],[20],[21],[22],[23],[24],[25],[26],[27],[28],[30],[32],[33]],[[\"l'\"],[\"Ii|\"],[\":!\"],[\".,;\"],[\"`\"],[\"j[]\"],[\"()\"],[\"1-\\\"\"],[\"r°*\"],[\"ft\\\\г\"],[\"/\"],[\"з\"],[\"kчь\"],[\"Jachnsuxyz035689?$авийкнпстухэ\"],[\"bdgopqv2Гборя\"],[\"FLPe7Реёц\"],[\"ERUY4=£ЕЁИЧЬЯл\"],[\"BCHNSV~#&+>БВЗЙНСУЭм\"],[\"DKXZ<КПХдъ\"],[\"AT_АЛТы\"],[\"OQ€ОЦ\"],[\"GMМшю\"],[\"wД\"],[\"mФЪЫжфщ\"],[\"@Ш\"],[\"WЮ\"],[\"ЖЩ\"]]]}",
-		() => " ",
-		() => 16,
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(1, f1());
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(0, f1());
-		},
+		() => "Mask",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 30);
 		},
 		() => 50,
+		() => "player",
+		() => "bot",
 		() => 36,
 		() => -717750023016447,
 		() => 200,
@@ -7102,33 +7140,49 @@ self.C3_ExpressionFuncs = [
 		},
 		() => -960,
 		() => 271,
-		() => 165,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 130);
+		},
 		() => -200,
 		() => 2880,
+		() => 1920,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 1920);
+		},
+		() => 165,
 		() => 960,
 		() => "Animation 2",
+		() => "scoreScreen",
+		() => "none",
+		() => "bonusScore",
+		() => 0.8,
+		() => 40,
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
 			const v2 = p._GetNode(2).GetVar();
-			return () => (n0.ExpObject() + (v1.GetValue() * v2.GetValue()));
+			return () => (n0.ExpObject() + ((v1.GetValue() * v2.GetValue()) * 0.8));
 		},
-		() => 3.5,
 		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (0.4 * f0("i"));
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => (v0.GetValue() * v1.GetValue());
+		},
+		() => 12,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (1.5 * v0.GetValue());
 		},
 		() => 1000,
 		() => 700,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => (and("", v0.GetValue()) + "м");
+			const v1 = p._GetNode(1).GetVar();
+			return () => (and("", (v0.GetValue() - v1.GetValue())) + "м");
 		},
 		() => 815,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (v0.GetValue() * 10);
-		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Бонус: ", v0.GetValue()) + "");
@@ -7196,6 +7250,7 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (and("", (Math.floor(divide(f0("tournamentscount"), 6)) + 1)) + "");
 		},
+		() => "ТурнирПройден",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0("tournamentscount");
@@ -7214,7 +7269,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (Math.floor(divide(f0("tournamentscount"), 6)) + 1);
 		},
-		() => 1920,
 		() => 1080,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -7241,11 +7295,77 @@ self.C3_ExpressionFuncs = [
 			return () => add(f0("coins"), 50);
 		},
 		() => "КнопкиМеню",
+		() => "shop",
 		() => 75,
 		() => 250,
 		() => 128,
 		() => 1860,
-		() => "leaders",
+		() => "Слой 0",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (500 + (f0("i") * 450));
+		},
+		() => "card",
+		() => 380,
+		() => 530,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 190);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 170);
+		},
+		() => "ok",
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject((and("", f1("i")) + ""));
+		},
+		() => "ПокупкаМонет",
+		() => 328,
+		() => 121,
+		() => "amount",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("X", (n0.ExpInstVar() * 10));
+		},
+		() => "X10",
+		() => 16144,
+		() => "price",
+		() => "Бесплатно",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 40);
+		},
+		() => "ПокупкаАвто",
+		() => "speed",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => and("Скорость X", (1.5 + (0.5 * f0("i"))));
+		},
+		() => 300,
+		() => "coin",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => add(f0("coins"), 10);
+		},
+		() => "hundredCoins",
+		() => "thousandСoins",
+		() => "0",
+		() => "1",
+		() => "2",
+		() => 15000,
+		() => 20000,
+		() => 25000,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => add(f0("coins"), 100);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => add(f0("coins"), 1000);
+		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Гонка #", (v0.GetValue() + 1)) + "");
@@ -7254,13 +7374,41 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(0);
 		},
-		() => "//i.mycdn.me/i?r=AzG9h-PeeFwI7g8EySOer1-5QZkOBbbBDwwdd5m4aNRJeqVpUQg5n0I0hcFPOwvfOw8",
-		() => "//i.mycdn.me/i?r=AzFIxPtkV78jcmdRfpoIOyaJ2uTSYYrx5ojWwdSvbX2EmjO7EuABt8t6j6ROsg0SwU4",
-		() => "//i.mycdn.me/i?r=AzEOxUXG5QgodWC3x6hM10Ck6eJIhcFt8poQQZRqtrMrruHTd6IZNxRcNOWzhh97qlE",
-		() => "//i.mycdn.me/i?r=AzEOxUXG5QgodWC3x6hM10Ckxhlm5cwyNA5ZVLlBR-dkyMsoSUk1qKwgziGI3nwNi6k",
-		() => "//i.mycdn.me/i?r=AzEOxUXG5QgodWC3x6hM10CkUezvYWLL1KrPZh8lYbCju13tPiX0ITqRH0fdbuWpYBI",
-		() => "https://i.mycdn.me/i?r=AyH4iRPQ2q0otWIFepML2LxRa3fr1ffGVT9RE1Y1YTCVKg",
-		() => "//i.mycdn.me/i?r=AzEPZsRbOZEKgBhR0XGMT1RkpUPQJfJNv2AtvO0JyOniDKaKTM5SRkZCeTgDn6uOyic&dpr=2",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0((v1.GetValue() + 1), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0((v1.GetValue() + 2), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0((v1.GetValue() + 3), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0((v1.GetValue() + 4), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0((v1.GetValue() + 5), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0((v1.GetValue() + 6), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0((v1.GetValue() + 7), "avatar");
+		},
 		() => 210,
 		() => 265,
 		() => 665,
