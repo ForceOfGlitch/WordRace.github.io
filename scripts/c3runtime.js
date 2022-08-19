@@ -6585,7 +6585,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
 		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
-		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
@@ -6598,7 +6597,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnPaymentsPurchase,
 		C3.Plugins.Eponesh_GameScore.Acts.PaymentsConsume,
-		C3.Plugins.System.Cnds.PickAll
+		C3.Plugins.System.Cnds.PickAll,
+		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition
 	];
 };
 self.C3_JsPropNameTable = [
@@ -6716,7 +6716,7 @@ self.C3_JsPropNameTable = [
 	{РазрешениеНаНажатиеКарточек: 0},
 	{ПроизошёлКонецЗаезда: 0},
 	{ИгрокПобедил: 0},
-	{СуммарныеБонусныеОчки: 0},
+	{БонусныеОчкиЗаЗаезд: 0},
 	{i: 0},
 	{j: 0},
 	{MinНомерСвободнойЯчейки: 0},
@@ -7001,7 +7001,7 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
-			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10);
+			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 100);
 		},
 		() => "playerScore",
 		p => {
@@ -7082,14 +7082,15 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 200);
+		},
+		p => {
+			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			return () => (n0.ExpObject() + (n1.ExpInstVar() * (1535 / v2.GetValue())));
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 200);
-		},
+		() => 2000,
 		() => "Mask",
 		p => {
 			const n0 = p._GetNode(0);
@@ -7328,9 +7329,8 @@ self.C3_ExpressionFuncs = [
 		() => "amount",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => and("X", (n0.ExpInstVar() * 10));
+			return () => (n0.ExpInstVar() * 10);
 		},
-		() => "X10",
 		() => 16144,
 		() => "price",
 		() => "Бесплатно",
