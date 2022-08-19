@@ -6585,6 +6585,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
 		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
+		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
@@ -6597,8 +6598,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnPaymentsPurchase,
 		C3.Plugins.Eponesh_GameScore.Acts.PaymentsConsume,
-		C3.Plugins.System.Cnds.PickAll,
-		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition
+		C3.Plugins.System.Cnds.PickAll
 	];
 };
 self.C3_JsPropNameTable = [
@@ -7252,6 +7252,10 @@ self.C3_ExpressionFuncs = [
 			return () => (and("", (Math.floor(divide(f0("tournamentscount"), 6)) + 1)) + "");
 		},
 		() => "ТурнирПройден",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (f0() - 1);
+		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0("tournamentscount");
