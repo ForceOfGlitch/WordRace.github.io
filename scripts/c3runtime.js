@@ -6579,6 +6579,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Exps.LayerNumber,
 		C3.Plugins.System.Cnds.PickOverlappingPoint,
 		C3.Plugins.Sprite.Cnds.OnCollision,
+		C3.Behaviors.MoveTo.Acts.SetMaxSpeed,
+		C3.Behaviors.MoveTo.Acts.SetSpeed,
+		C3.Behaviors.MoveTo.Cnds.CompareSpeed,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
@@ -6744,6 +6747,7 @@ self.C3_JsPropNameTable = [
 	{ЦенаОднойКарточки: 0},
 	{КоличествоНепустыхПачекКарточекВнутриОчередиНаПолёт: 0},
 	{ПобедаИгрока: 0},
+	{СуммаПачкиКарточек: 0},
 	{МестоОтображаемогоИгрокаВТаблице: 0},
 	{ТурнирПройден: 0},
 	{МестоИгрока: 0},
@@ -7001,7 +7005,7 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
-			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 100);
+			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10);
 		},
 		() => "playerScore",
 		p => {
@@ -7161,17 +7165,15 @@ self.C3_ExpressionFuncs = [
 		() => 0.8,
 		() => 40,
 		p => {
-			const n0 = p._GetNode(0);
+			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
-			const v2 = p._GetNode(2).GetVar();
-			return () => (n0.ExpObject() + ((v1.GetValue() * v2.GetValue()) * 0.8));
+			return () => ((v0.GetValue() * v1.GetValue()) * 0.7);
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
 			return () => (v0.GetValue() * v1.GetValue());
 		},
-		() => 12,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (1.5 * v0.GetValue());
@@ -7188,6 +7190,16 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Бонус: ", v0.GetValue()) + "");
 		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (170 * (v0.GetValue() / 400));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => (n0.ExpObject() + (v1.GetValue() * 1.2));
+		},
+		() => 4.5,
 		() => "global@score",
 		() => "default",
 		() => 99,
