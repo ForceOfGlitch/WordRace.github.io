@@ -6502,6 +6502,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.AJAX.Acts.RequestFile,
 		C3.Plugins.System.Acts.SetBoolVar,
+		C3.Plugins.Arr.Acts.Clear,
 		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.System.Exps.loopindex,
@@ -6581,7 +6582,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.OnCollision,
 		C3.Behaviors.MoveTo.Acts.SetMaxSpeed,
 		C3.Behaviors.MoveTo.Acts.SetSpeed,
-		C3.Behaviors.MoveTo.Cnds.CompareSpeed,
+		C3.Behaviors.MoveTo.Exps.MaxSpeed,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
@@ -6593,7 +6594,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
 		C3.Plugins.Sprite.Acts.StartAnim,
-		C3.Plugins.Touch.Cnds.OnTouchStart,
+		C3.Plugins.Touch.Cnds.OnTouchEnd,
 		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Cnds.IsAdsLastAdSuccess,
@@ -6638,6 +6639,8 @@ self.C3_JsPropNameTable = [
 	{Pin: 0},
 	{mask: 0},
 	{РамкаВодителей: 0},
+	{ЧисленностьПачекКарточекБонусногоЗаезда: 0},
+	{Тест: 0},
 	{НепопулярныеГласные: 0},
 	{НепопулярныеГласныеJSON: 0},
 	{НепопулярныеСогласные: 0},
@@ -6743,11 +6746,12 @@ self.C3_JsPropNameTable = [
 	{ОжиданиеБота: 0},
 	{ДобавляемыеОчки: 0},
 	{ДлинаСобранногоСлова: 0},
-	{ЧисленностьТекущейПачкиКарточек: 0},
+	{НомерТекущейПачкиБонусногоЗаезда: 0},
 	{ЦенаОднойКарточки: 0},
+	{КоэфОжиданияМеждуПачкамиКарточек: 0},
 	{КоличествоНепустыхПачекКарточекВнутриОчередиНаПолёт: 0},
 	{ПобедаИгрока: 0},
-	{СуммаПачкиКарточек: 0},
+	{НепустыеСлоиКарточек: 0},
 	{МестоОтображаемогоИгрокаВТаблице: 0},
 	{ТурнирПройден: 0},
 	{МестоИгрока: 0},
@@ -6870,6 +6874,7 @@ self.C3_ExpressionFuncs = [
 		() => "popularGlas",
 		() => 0,
 		() => 1,
+		() => 1.2,
 		() => 10,
 		() => 2,
 		() => 30,
@@ -6984,7 +6989,7 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => f0(v1.GetValue());
 		},
-		() => 334304,
+		() => 31951,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const n1 = p._GetNode(1);
@@ -7005,7 +7010,7 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
-			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10);
+			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 100);
 		},
 		() => "playerScore",
 		p => {
@@ -7165,9 +7170,28 @@ self.C3_ExpressionFuncs = [
 		() => 0.8,
 		() => 40,
 		p => {
+			const n0 = p._GetNode(0);
+			return () => add(n0.ExpObject(0), 1);
+		},
+		p => {
 			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			return () => ((v0.GetValue() * v1.GetValue()) * 0.7);
+			const n1 = p._GetNode(1);
+			return () => multiply(v0.GetValue(), n1.ExpObject(0));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (f0("i") + 1);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => add(n0.ExpObject((f1("i") + 1)), 1);
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const n1 = p._GetNode(1);
+			const f2 = p._GetNode(2).GetBoundMethod();
+			return () => multiply(unaryminus(multiply(subtract(400, multiply(v0.GetValue(), n1.ExpObject((f2("i") + 1)))), 0.02)), 0.022);
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -7176,7 +7200,9 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => (1.5 * v0.GetValue());
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			return () => multiply(v0.GetValue(), n1.ExpObject(v2.GetValue()));
 		},
 		() => 1000,
 		() => 700,
@@ -7191,15 +7217,17 @@ self.C3_ExpressionFuncs = [
 			return () => (and("Бонус: ", v0.GetValue()) + "");
 		},
 		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (170 * (v0.GetValue() / 400));
-		},
-		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
-			return () => (n0.ExpObject() + (v1.GetValue() * 1.2));
+			const v2 = p._GetNode(2).GetVar();
+			return () => (n0.ExpObject() + (((v1.GetValue() * 8) - v2.GetValue()) * 30));
 		},
-		() => 4.5,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => ((((v0.GetValue() * 8) - v1.GetValue()) * (30 / n2.ExpBehavior())) + 2.5);
+		},
 		() => "global@score",
 		() => "default",
 		() => 99,
