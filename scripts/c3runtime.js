@@ -6864,7 +6864,7 @@ self.C3_ExpressionFuncs = [
 		() => "КонецИгры",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (500 + (Math.floor(divide(f0("tournamentscount"), 6)) * 100));
+			return () => (350 + (Math.floor(divide(f0("tournamentscount"), 6)) * 100));
 		},
 		() => "Тачи по объектам после игры",
 		() => "words",
@@ -7186,6 +7186,11 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => add(n0.ExpObject((f1("i") + 1)), 1);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => n0.ExpObject(v1.GetValue());
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
