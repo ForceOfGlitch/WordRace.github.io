@@ -3674,6 +3674,28 @@ for(const key of this._data.keys()){this._curKey=key;eventSheetManager.PushCopyS
 }
 
 {
+'use strict';{const C3=self.C3;C3.Plugins.TiledBg=class TiledBgPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}
+{const C3=self.C3;function WrapModeToStr(wrapMode){switch(wrapMode){case 0:return"clamp-to-edge";case 1:return"repeat";case 2:return"mirror-repeat"}return"repeat"}C3.Plugins.TiledBg.Type=class TiledBgType extends C3.SDKTypeBase{constructor(objectClass,exportData){super(objectClass);this._wrapX="repeat";this._wrapY="repeat";if(exportData){this._wrapX=WrapModeToStr(exportData[0]);this._wrapY=WrapModeToStr(exportData[1])}}Release(){super.Release()}OnCreate(){this.GetImageInfo().LoadAsset(this._runtime)}LoadTextures(renderer){return this.GetImageInfo().LoadStaticTexture(renderer,
+{sampling:this._runtime.GetSampling(),wrapX:this._wrapX,wrapY:this._wrapY})}ReleaseTextures(){this.GetImageInfo().ReleaseTexture()}}}
+{const C3=self.C3;const C3X=self.C3X;const INITIALLY_VISIBLE=0;const ORIGIN=1;const IMAGE_OFFSET_X=4;const IMAGE_OFFSET_Y=5;const IMAGE_SCALE_X=6;const IMAGE_SCALE_Y=7;const IMAGE_ANGLE=8;const tempRect=C3.New(C3.Rect);const tempQuad=C3.New(C3.Quad);const rcTex=C3.New(C3.Rect);const qTex=C3.New(C3.Quad);C3.Plugins.TiledBg.Instance=class TiledBgInstance extends C3.SDKWorldInstanceBase{constructor(inst,properties){super(inst);this._imageOffsetX=0;this._imageOffsetY=0;this._imageScaleX=1;this._imageScaleY=
+1;this._imageAngle=0;this._ownImageInfo=null;if(properties){this.GetWorldInfo().SetVisible(!!properties[INITIALLY_VISIBLE]);this._imageOffsetX=properties[IMAGE_OFFSET_X];this._imageOffsetY=properties[IMAGE_OFFSET_Y];this._imageScaleX=properties[IMAGE_SCALE_X];this._imageScaleY=properties[IMAGE_SCALE_Y];this._imageAngle=C3.toRadians(properties[IMAGE_ANGLE])}}Release(){this._ReleaseOwnImage();super.Release()}_ReleaseOwnImage(){if(this._ownImageInfo){this._ownImageInfo.Release();this._ownImageInfo=null}}CalculateTextureCoordsFor3DFace(areaWidth,
+areaHeight,outQuad){const imageInfo=this.GetCurrentImageInfo();const imageWidth=imageInfo.GetWidth();const imageHeight=imageInfo.GetHeight();const imageOffsetX=this._imageOffsetX/imageWidth;const imageOffsetY=this._imageOffsetY/imageHeight;const imageAngle=this._imageAngle;rcTex.set(0,0,areaWidth/(imageWidth*this._imageScaleX),areaHeight/(imageHeight*this._imageScaleY));rcTex.offset(-imageOffsetX,-imageOffsetY);if(imageAngle===0)outQuad.setFromRect(rcTex);else outQuad.setFromRotatedRect(rcTex,-imageAngle)}Draw(renderer){const imageInfo=
+this.GetCurrentImageInfo();const texture=imageInfo.GetTexture();if(texture===null)return;renderer.SetTexture(texture);const imageWidth=imageInfo.GetWidth();const imageHeight=imageInfo.GetHeight();const imageOffsetX=this._imageOffsetX/imageWidth;const imageOffsetY=this._imageOffsetY/imageHeight;const wi=this.GetWorldInfo();rcTex.set(0,0,wi.GetWidth()/(imageWidth*this._imageScaleX),wi.GetHeight()/(imageHeight*this._imageScaleY));rcTex.offset(-imageOffsetX,-imageOffsetY);if(wi.HasMesh())this._DrawMesh(wi,
+renderer);else this._DrawStandard(wi,renderer)}_DrawStandard(wi,renderer){let quad=wi.GetBoundingQuad();if(this._runtime.IsPixelRoundingEnabled())quad=wi.PixelRoundQuad(quad);if(this._imageAngle===0)renderer.Quad3(quad,rcTex);else{qTex.setFromRotatedRect(rcTex,-this._imageAngle);renderer.Quad4(quad,qTex)}}_DrawMesh(wi,renderer){const transformedMesh=wi.GetTransformedMesh();if(wi.IsMeshChanged()){wi.CalculateBbox(tempRect,tempQuad,false);let quad=tempQuad;if(this._runtime.IsPixelRoundingEnabled())quad=
+wi.PixelRoundQuad(quad);let texCoords=rcTex;if(this._imageAngle!==0){qTex.setFromRotatedRect(rcTex,-this._imageAngle);texCoords=qTex}transformedMesh.CalculateTransformedMesh(wi.GetSourceMesh(),quad,texCoords);wi.SetMeshChanged(false)}transformedMesh.Draw(renderer)}GetCurrentImageInfo(){return this._ownImageInfo||this._objectClass.GetImageInfo()}IsOriginalSizeKnown(){return true}GetTexture(){return this.GetCurrentImageInfo().GetTexture()}_SetMeshChanged(){this.GetWorldInfo().SetMeshChanged(true)}_SetImageOffsetX(x){if(this._imageOffsetX===
+x)return;this._imageOffsetX=x;this._runtime.UpdateRender();this._SetMeshChanged()}_GetImageOffsetX(){return this._imageOffsetX}_SetImageOffsetY(y){if(this._imageOffsetY===y)return;this._imageOffsetY=y;this._runtime.UpdateRender();this._SetMeshChanged()}_GetImageOffsetY(){return this._imageOffsetY}_SetImageScaleX(x){if(this._imageScaleX===x)return;this._imageScaleX=x;this._runtime.UpdateRender();this._SetMeshChanged()}_GetImageScaleX(){return this._imageScaleX}_SetImageScaleY(y){if(this._imageScaleY===
+y)return;this._imageScaleY=y;this._runtime.UpdateRender();this._SetMeshChanged()}_GetImageScaleY(){return this._imageScaleY}_SetImageAngle(a){if(this._imageAngle===a)return;this._imageAngle=a;this._runtime.UpdateRender();this._SetMeshChanged()}_GetImageAngle(){return this._imageAngle}GetPropertyValueByIndex(index){switch(index){case IMAGE_OFFSET_X:return this._GetImageOffsetX();case IMAGE_OFFSET_Y:return this._GetImageOffsetY();case IMAGE_SCALE_X:return this._GetImageScaleX();case IMAGE_SCALE_Y:return this._GetImageScaleY();
+case IMAGE_ANGLE:return this._GetImageAngle()}}SetPropertyValueByIndex(index,value){switch(index){case IMAGE_OFFSET_X:this._SetImageOffsetX(value);break;case IMAGE_OFFSET_Y:this._SetImageOffsetY(value);break;case IMAGE_SCALE_X:this._SetImageScaleX(value);break;case IMAGE_SCALE_Y:this._SetImageScaleY(value);break;case IMAGE_ANGLE:this._SetImageAngle(value);break}}GetScriptInterfaceClass(){return self.ITiledBackgroundInstance}};const map=new WeakMap;self.ITiledBackgroundInstance=class ITiledBackgroundInstance extends self.IWorldInstance{constructor(){super();
+map.set(this,self.IInstance._GetInitInst().GetSdkInstance())}set imageOffsetX(x){C3X.RequireFiniteNumber(x);map.get(this)._SetImageOffsetX(x)}get imageOffsetX(){return map.get(this)._GetImageOffsetX()}set imageOffsetY(y){C3X.RequireFiniteNumber(y);map.get(this)._SetImageOffsetY(y)}get imageOffsetY(){return map.get(this)._GetImageOffsetY()}set imageScaleX(x){C3X.RequireFiniteNumber(x);map.get(this)._SetImageScaleX(x)}get imageScaleX(){return map.get(this)._GetImageScaleX()}set imageScaleY(y){C3X.RequireFiniteNumber(y);
+map.get(this)._SetImageScaleY(y)}get imageScaleY(){return map.get(this)._GetImageScaleY()}set imageAngle(a){C3X.RequireFiniteNumber(a);map.get(this)._SetImageAngle(a)}get imageAngle(){return map.get(this)._GetImageAngle()}set imageAngleDegrees(a){C3X.RequireFiniteNumber(a);map.get(this)._SetImageAngle(C3.toRadians(a))}get imageAngleDegrees(){return C3.toDegrees(map.get(this)._GetImageAngle())}get imageWidth(){return map.get(this).GetCurrentImageInfo().GetWidth()}get imageHeight(){return map.get(this).GetCurrentImageInfo().GetHeight()}}}
+{const C3=self.C3;C3.Plugins.TiledBg.Cnds={OnURLLoaded(){return true},OnURLFailed(){return true}}}
+{const C3=self.C3;C3.Plugins.TiledBg.Acts={SetImageOffsetX(x){this._SetImageOffsetX(x)},SetImageOffsetY(y){this._SetImageOffsetY(y)},SetImageScaleX(x){this._SetImageScaleX(x/100)},SetImageScaleY(y){this._SetImageScaleY(y/100)},SetImageAngle(a){this._SetImageAngle(C3.toRadians(a))},SetEffect(effect){this.GetWorldInfo().SetBlendMode(effect);this._runtime.UpdateRender()},async LoadURL(url,crossOrigin){if(this._ownImageInfo&&this._ownImageInfo.GetURL()===url)return;const runtime=this._runtime;const imageInfo=
+C3.New(C3.ImageInfo);try{await imageInfo.LoadDynamicAsset(runtime,url);if(!imageInfo.IsLoaded())throw new Error("image failed to load");if(this.WasReleased()){imageInfo.Release();return null}const texture=await imageInfo.LoadStaticTexture(runtime.GetRenderer(),{sampling:this._runtime.GetSampling(),wrapX:"repeat",wrapY:"repeat"});if(!texture)return}catch(err){console.error("Load image from URL failed: ",err);this.Trigger(C3.Plugins.TiledBg.Cnds.OnURLFailed);return}if(this.WasReleased()){imageInfo.Release();
+return}this._ReleaseOwnImage();this._ownImageInfo=imageInfo;runtime.UpdateRender();await this.TriggerAsync(C3.Plugins.TiledBg.Cnds.OnURLLoaded)}}}{const C3=self.C3;C3.Plugins.TiledBg.Exps={ImageWidth(){return this.GetCurrentImageInfo().GetWidth()},ImageHeight(){return this.GetCurrentImageInfo().GetHeight()},ImageOffsetX(){return this._imageOffsetX},ImageOffsetY(){return this._imageOffsetY},ImageScaleX(){return this._imageScaleX*100},ImageScaleY(){return this._imageScaleY*100},ImageAngle(){return C3.toDegrees(this._imageAngle)}}};
+
+}
+
+{
 'use strict';{const C3=self.C3;C3.Plugins.Mouse=class MousePlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}
 {const C3=self.C3;const C3X=self.C3X;C3.Plugins.Mouse.Type=class MouseType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}GetScriptInterfaceClass(){return self.IMouseObjectType}};let mouseObjectType=null;function GetMouseSdkInstance(){return mouseObjectType.GetSingleGlobalInstance().GetSdkInstance()}self.IMouseObjectType=class IMouseObjectType extends self.IObjectClass{constructor(objectType){super(objectType);mouseObjectType=objectType;objectType.GetRuntime()._GetCommonScriptInterfaces().mouse=
 this}getMouseX(layerNameOrNumber){return GetMouseSdkInstance().GetMousePositionForLayer(layerNameOrNumber)[0]}getMouseY(layerNameOrNumber){return GetMouseSdkInstance().GetMousePositionForLayer(layerNameOrNumber)[1]}getMousePosition(layerNameOrNumber){return GetMouseSdkInstance().GetMousePositionForLayer(layerNameOrNumber)}isMouseButtonDown(button){return GetMouseSdkInstance().IsMouseButtonDown(button)}}}
@@ -6490,6 +6512,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Pin,
 		C3.Plugins.Spritefont2,
 		C3.Plugins.Dictionary,
+		C3.Plugins.TiledBg,
 		C3.Plugins.Mouse,
 		C3.Plugins.Touch,
 		C3.Plugins.Eponesh_GameScore,
@@ -6504,6 +6527,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.Arr.Acts.Clear,
 		C3.Plugins.Arr.Acts.SetX,
+		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.System.Exps.loopindex,
 		C3.Plugins.System.Acts.CreateObject,
@@ -6561,6 +6585,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
+		C3.Plugins.Sprite.Acts.SetAnimSpeed,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Behaviors.Pin.Acts.PinByProperties,
 		C3.Plugins.Sprite.Acts.MoveToTop,
@@ -6570,35 +6595,38 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.AppendText,
 		C3.Behaviors.MoveTo.Acts.Stop,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
-		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Plugins.Text.Acts.SetVisible,
 		C3.Plugins.Text.Acts.SetPos,
 		C3.Plugins.Text.Acts.MoveToTop,
 		C3.Plugins.Text.Acts.SetVAlign,
 		C3.Plugins.Text.Acts.SetHAlign,
-		C3.Plugins.Text.Exps.LayerNumber,
-		C3.Plugins.System.Cnds.PickOverlappingPoint,
+		C3.Plugins.Sprite.Exps.LayerName,
 		C3.Plugins.Sprite.Cnds.OnCollision,
 		C3.Behaviors.MoveTo.Acts.SetMaxSpeed,
 		C3.Behaviors.MoveTo.Acts.SetSpeed,
 		C3.Behaviors.MoveTo.Exps.MaxSpeed,
+		C3.Plugins.Sprite.Acts.StartAnim,
+		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
+		C3.Plugins.Eponesh_GameScore.Cnds.IsAdsLastAdSuccess,
+		C3.Plugins.Eponesh_GameScore.Acts.PaymentsPurchase,
+		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
 		C3.Plugins.Sprite.Acts.LoadURL,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerFetchFields,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
-		C3.Plugins.Sprite.Acts.StartAnim,
+		C3.Plugins.Text.Exps.LayerNumber,
+		C3.Plugins.TiledBg.Acts.Destroy,
 		C3.Plugins.Touch.Cnds.OnTouchEnd,
-		C3.Plugins.Dictionary.Exps.Get,
-		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
-		C3.Plugins.Eponesh_GameScore.Cnds.IsAdsLastAdSuccess,
-		C3.Plugins.Eponesh_GameScore.Acts.PaymentsPurchase,
+		C3.Plugins.TiledBg.Acts.SetInstanceVar,
+		C3.Plugins.TiledBg.Acts.SetSize,
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnPaymentsPurchase,
 		C3.Plugins.Eponesh_GameScore.Acts.PaymentsConsume,
@@ -6617,7 +6645,7 @@ self.C3_JsPropNameTable = [
 	{tag: 0},
 	{МашинаИгрока: 0},
 	{Фон: 0},
-	{ФреймКонцаИгры: 0},
+	{КнопкаКонецИгры: 0},
 	{ДобавлениеНаКолоду: 0},
 	{ОсталосьВКолоде: 0},
 	{ОстатокКолоды: 0},
@@ -6681,6 +6709,7 @@ self.C3_JsPropNameTable = [
 	{ПереходТурнирнаяТаблица: 0},
 	{ПополнениеМонет: 0},
 	{КнопкаИграть: 0},
+	{НомерСтраницы: 0},
 	{ФонМагазина: 0},
 	{ЗакрытьМагазин: 0},
 	{СлайдерМагазинаВлево: 0},
@@ -6691,6 +6720,7 @@ self.C3_JsPropNameTable = [
 	{priceForCoins: 0},
 	{priceForCars: 0},
 	{ТекстМагазина: 0},
+	{ХитбоксСлайдеров: 0},
 	{Мышь: 0},
 	{Текст: 0},
 	{Тач: 0},
@@ -6757,9 +6787,11 @@ self.C3_JsPropNameTable = [
 	{МестоИгрока: 0},
 	{ОткрытЛиМагазинАвто: 0},
 	{ОткрытЛиМагазинМонет: 0},
+	{КоличествоПокупокАвто: 0},
 	{ПобедыВнутриТурнира: 0},
 	{КоличествоПройденныхТурниров: 0},
 	{ПокупкаАвто: 0},
+	{НомерБудущейСтраницы: 0},
 	{НомерТекущегоСоперника: 0}
 ];
 }
@@ -6864,7 +6896,7 @@ self.C3_ExpressionFuncs = [
 		() => "КонецИгры",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (350 + (Math.floor(divide(f0("tournamentscount"), 6)) * 100));
+			return () => (350 + (Math.floor(divide(f0("tournamentscount"), 6)) * 25));
 		},
 		() => "Тачи по объектам после игры",
 		() => "words",
@@ -6889,6 +6921,10 @@ self.C3_ExpressionFuncs = [
 		() => 7,
 		() => 430,
 		() => "Тачи по объектам в процессе игры",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("", v0.GetValue()) + "");
+		},
 		() => "i",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -6930,6 +6966,11 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpInstVar();
 		},
 		() => "goalScore",
+		() => "coins",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("coins");
+		},
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
@@ -6944,7 +6985,6 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject(f1());
 		},
 		() => -1,
-		() => "coins",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 15);
@@ -6975,10 +7015,6 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0("coins");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => subtract(f0("coins"), 15);
 		},
 		() => -15,
@@ -6989,7 +7025,7 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => f0(v1.GetValue());
 		},
-		() => 31951,
+		() => 32824,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const n1 = p._GetNode(1);
@@ -7010,13 +7046,10 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
-			return () => (Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10);
+			const v2 = p._GetNode(2).GetVar();
+			return () => ((Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10) * (1 + (v2.GetValue() * 0.5)));
 		},
 		() => "playerScore",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (and("", v0.GetValue()) + "");
-		},
 		() => 1800,
 		() => 800,
 		p => {
@@ -7099,7 +7132,13 @@ self.C3_ExpressionFuncs = [
 			const v2 = p._GetNode(2).GetVar();
 			return () => (n0.ExpObject() + (n1.ExpInstVar() * (1535 / v2.GetValue())));
 		},
+		() => 1700,
 		() => 2000,
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			return () => (Math.sqrt(((2 * n0.ExpInstVar()) * ((1535 / v1.GetValue()) / 600))) + 0.5);
+		},
 		() => "Mask",
 		p => {
 			const n0 = p._GetNode(0);
@@ -7156,12 +7195,10 @@ self.C3_ExpressionFuncs = [
 		},
 		() => -200,
 		() => 2880,
-		() => 1920,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 1920);
 		},
-		() => 165,
 		() => 960,
 		() => "Animation 2",
 		() => "scoreScreen",
@@ -7209,17 +7246,10 @@ self.C3_ExpressionFuncs = [
 			const v2 = p._GetNode(2).GetVar();
 			return () => multiply(v0.GetValue(), n1.ExpObject(v2.GetValue()));
 		},
-		() => 1000,
-		() => 700,
+		() => "scoreEnd",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			return () => (and("", (v0.GetValue() - v1.GetValue())) + "м");
-		},
-		() => 815,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (and("Бонус: ", v0.GetValue()) + "");
+			return () => (and("", v0.GetValue()) + "м");
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -7232,6 +7262,60 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			const n2 = p._GetNode(2);
 			return () => ((((v0.GetValue() * 8) - v1.GetValue()) * (30 / n2.ExpBehavior())) + 2.5);
+		},
+		() => "coin",
+		() => "ok",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => add(f0("coins"), 10);
+		},
+		() => "hundredCoins",
+		() => "thousandСoins",
+		() => 540,
+		() => 1920,
+		() => 1080,
+		() => 75,
+		() => 250,
+		() => "МагазинМонет",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (500 + (f0("i") * 450));
+		},
+		() => 570,
+		() => "card",
+		() => 380,
+		() => 530,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 190);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 35);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 170);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject((and("", f1("i")) + ""));
+		},
+		() => "ПокупкаМонет",
+		() => 328,
+		() => 121,
+		() => "amount",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpInstVar() * 10);
+		},
+		() => 16144,
+		() => "price",
+		() => "Бесплатно",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 40);
 		},
 		() => "global@score",
 		() => "default",
@@ -7303,23 +7387,23 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("carBuyCount");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0("tournamentscount");
 		},
 		() => 500,
 		() => 1100,
 		() => 1400,
-		() => 1700,
 		() => 566,
 		() => 517,
 		() => 512,
-		() => 540,
-		() => 570,
 		() => 580,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (Math.floor(divide(f0("tournamentscount"), 6)) + 1);
 		},
-		() => 1080,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
@@ -7327,18 +7411,15 @@ self.C3_ExpressionFuncs = [
 			return () => (((v0.GetValue() - (v1.GetValue() % 6)) + f2()) + 1);
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 35);
-		},
-		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() % 6);
 		},
-		() => 0.2,
+		() => 0.7,
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 30);
+			return () => (n0.ExpObject() + 40);
 		},
+		() => "main",
 		() => "Вы прошли турнир! + 50 монет\n\nНажмите на экран, чтобы продолжить",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7346,67 +7427,30 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "КнопкиМеню",
 		() => "shop",
-		() => 75,
-		() => 250,
 		() => 128,
 		() => 1860,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 100);
+		},
+		() => "left",
+		() => "right",
 		() => "Слой 0",
+		() => "sell",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (500 + (f0("i") * 450));
-		},
-		() => "card",
-		() => 380,
-		() => 530,
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 190);
+			const n1 = p._GetNode(1);
+			return () => subtract(f0("coins"), n1.ExpInstVar());
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 170);
+			const v0 = p._GetNode(0).GetVar();
+			return () => (v0.GetValue() + 1);
 		},
-		() => "ok",
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject((and("", f1("i")) + ""));
-		},
-		() => "ПокупкаМонет",
-		() => 328,
-		() => 121,
-		() => "amount",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpInstVar() * 10);
-		},
-		() => 16144,
-		() => "price",
-		() => "Бесплатно",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 40);
-		},
-		() => "ПокупкаАвто",
-		() => "speed",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => and("Скорость X", (1.5 + (0.5 * f0("i"))));
-		},
-		() => 300,
-		() => "coin",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => add(f0("coins"), 10);
-		},
-		() => "hundredCoins",
-		() => "thousandСoins",
+		() => "carBuyCount",
 		() => "0",
 		() => "1",
 		() => "2",
-		() => 15000,
-		() => 20000,
-		() => 25000,
+		() => "3",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 100);
@@ -7414,6 +7458,37 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 1000);
+		},
+		() => 350,
+		() => 160,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (and("", (f0("i") + 1)) + "");
+		},
+		() => "preSell",
+		() => "ПокупкаАвто",
+		() => "speed",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => and("Скорость X", (1.5 + (0.5 * f0("i"))));
+		},
+		() => 300,
+		() => "postSell",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => (and("", ((f0("i") + 1) + (3 * v1.GetValue()))) + "");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			const v2 = p._GetNode(2).GetVar();
+			return () => n0.ExpObject((and("", (f1("i") + (3 * v2.GetValue()))) + ""));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => and("Скорость X", (1.5 + (0.5 * (f0("i") + (3 * v1.GetValue())))));
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
