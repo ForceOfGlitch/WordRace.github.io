@@ -6501,6 +6501,20 @@ d},Unpin(){this._SetPinInst(null);this._mode="";this._propSet.clear();this._pinI
 }
 
 {
+'use strict';{const C3=self.C3;C3.Behaviors.Fade=class FadeBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.Fade.Type=class FadeType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const FADE_IN_TIME=0;const WAIT_TIME=1;const FADE_OUT_TIME=2;const DESTROY=3;const ACTIVE_AT_START=4;C3.Behaviors.Fade.Instance=class FadeInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._fadeInTime=0;this._waitTime=0;this._fadeOutTime=0;this._destroy=true;this._activeAtStart=true;this._setMaxOpacity=false;this._stage=0;this._stageTime=C3.New(C3.KahanSum);this._maxOpacity=this._inst.GetWorldInfo().GetOpacity()||1;if(properties){this._fadeInTime=
+properties[FADE_IN_TIME];this._waitTime=properties[WAIT_TIME];this._fadeOutTime=properties[FADE_OUT_TIME];this._destroy=!!properties[DESTROY];this._activeAtStart=!!properties[ACTIVE_AT_START];this._stage=this._activeAtStart?0:3}if(this._activeAtStart)if(this._fadeInTime===0){this._stage=1;if(this._waitTime===0)this._stage=2}else{this._inst.GetWorldInfo().SetOpacity(0);this._runtime.UpdateRender()}this._StartTicking()}Release(){super.Release()}SaveToJson(){return{"fit":this._fadeInTime,"wt":this._waitTime,
+"fot":this._fadeOutTime,"d":this._destroy,"s":this._stage,"st":this._stageTime.Get(),"mo":this._maxOpacity}}LoadFromJson(o){this._fadeInTime=o["fit"];this._waitTime=o["wt"];this._fadeOutTime=o["fot"];this._destroy=o["d"];this._stage=o["s"];this._stageTime.Set(o["st"]);this._maxOpacity=o["mo"]}Tick(){const dt=this._runtime.GetDt(this._inst);this._stageTime.Add(dt);const wi=this._inst.GetWorldInfo();if(this._stage===0){wi.SetOpacity(this._stageTime.Get()/this._fadeInTime*this._maxOpacity);this._runtime.UpdateRender();
+if(wi.GetOpacity()>=this._maxOpacity){wi.SetOpacity(this._maxOpacity);this._stage=1;this._stageTime.Reset();this.Trigger(C3.Behaviors.Fade.Cnds.OnFadeInEnd)}}if(this._stage===1)if(this._stageTime.Get()>=this._waitTime){this._stage=2;this._stageTime.Reset();this.Trigger(C3.Behaviors.Fade.Cnds.OnWaitEnd)}if(this._stage===2)if(this._fadeOutTime!==0){wi.SetOpacity(this._maxOpacity-this._stageTime.Get()/this._fadeOutTime*this._maxOpacity);this._runtime.UpdateRender();if(wi.GetOpacity()<=0){this._stage=
+3;this._stageTime.Reset();this.Trigger(C3.Behaviors.Fade.Cnds.OnFadeOutEnd);if(this._destroy)this._runtime.DestroyInstance(this._inst)}}}Start(){this._stage=0;this._stageTime.Reset();if(this._fadeInTime===0){this._stage=1;if(this._waitTime===0)this._stage=2}else{this._inst.GetWorldInfo().SetOpacity(0);this._runtime.UpdateRender()}}GetPropertyValueByIndex(index){switch(index){case FADE_IN_TIME:return this._fadeInTime;case WAIT_TIME:return this._waitTime;case FADE_OUT_TIME:return this._fadeOutTime;
+case DESTROY:return this._destroy}}SetPropertyValueByIndex(index,value){switch(index){case FADE_IN_TIME:this._fadeInTime=value;break;case WAIT_TIME:this._waitTime=value;break;case FADE_OUT_TIME:this._fadeOutTime=value;break;case DESTROY:this._destroy=!!value;break}}GetDebuggerProperties(){const prefix="behaviors.fade";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".properties.fade-in-time.name",value:this._fadeInTime,onedit:v=>this._fadeInTime=v},{name:prefix+".properties.wait-time.name",
+value:this._waitTime,onedit:v=>this._waitTime=v},{name:prefix+".properties.fade-out-time.name",value:this._fadeOutTime,onedit:v=>this._fadeOutTime=v},{name:prefix+".debugger.stage",value:[prefix+".debugger."+["fade-in","wait","fade-out","done"][this._stage]]}]}]}}}{const C3=self.C3;C3.Behaviors.Fade.Cnds={OnFadeOutEnd(){return true},OnFadeInEnd(){return true},OnWaitEnd(){return true}}}
+{const C3=self.C3;C3.Behaviors.Fade.Acts={StartFade(){if(!this._activeAtStart&&!this._setMaxOpacity){this._maxOpacity=this._inst.GetWorldInfo().GetOpacity()||1;this._setMaxOpacity=true}if(this._stage===3)this.Start()},RestartFade(){this.Start()},SetFadeInTime(t){if(t<0)t=0;this._fadeInTime=t},SetWaitTime(t){if(t<0)t=0;this._waitTime=t},SetFadeOutTime(t){if(t<0)t=0;this._fadeOutTime=t}}}
+{const C3=self.C3;C3.Behaviors.Fade.Exps={FadeInTime(){return this._fadeInTime},WaitTime(){return this._waitTime},FadeOutTime(){return this._fadeOutTime}}};
+
+}
+
+{
 const C3 = self.C3;
 self.C3_GetObjectRefTable = function () {
 	return [
@@ -6510,6 +6524,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr,
 		C3.Plugins.Json,
 		C3.Behaviors.Pin,
+		C3.Behaviors.Fade,
 		C3.Plugins.Spritefont2,
 		C3.Plugins.Dictionary,
 		C3.Plugins.TiledBg,
@@ -6550,6 +6565,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Json.Exps.Get,
 		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Text.Acts.Destroy,
+		C3.Behaviors.Fade.Acts.SetFadeOutTime,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Cnds.CompareBoolVar,
@@ -6568,11 +6584,12 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.System.Acts.GoToLayout,
+		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.System.Exps.len,
 		C3.Plugins.System.Exps.mid,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
-		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Text.Acts.SetInstanceVar,
+		C3.Plugins.Text.Acts.SetVisible,
 		C3.Plugins.Arr.Exps.Width,
 		C3.Plugins.Text.Acts.SetPosToObject,
 		C3.Plugins.Text.Exps.IID,
@@ -6582,8 +6599,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Plugins.System.Cnds.While,
 		C3.Plugins.Arr.Cnds.CompareX,
-		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
-		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
 		C3.Plugins.Sprite.Acts.SetAnimSpeed,
 		C3.Plugins.Sprite.Acts.SetPos,
@@ -6593,10 +6608,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetFontColor,
 		C3.Plugins.Text.Acts.SetSize,
 		C3.Plugins.Text.Acts.AppendText,
+		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Behaviors.MoveTo.Acts.Stop,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
 		C3.Plugins.Sprite.Acts.SetVisible,
-		C3.Plugins.Text.Acts.SetVisible,
 		C3.Plugins.Text.Acts.SetPos,
 		C3.Plugins.Text.Acts.MoveToTop,
 		C3.Plugins.Text.Acts.SetVAlign,
@@ -6611,6 +6626,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Cnds.IsAdsLastAdSuccess,
 		C3.Plugins.Eponesh_GameScore.Acts.PaymentsPurchase,
 		C3.Plugins.Dictionary.Exps.Get,
+		C3.Plugins.Sprite.Exps.Width,
+		C3.Plugins.Sprite.Acts.MoveToLayer,
+		C3.Plugins.Sprite.Exps.Height,
+		C3.Behaviors.Fade.Acts.RestartFade,
+		C3.Plugins.Text.Exps.LayerName,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
@@ -6622,6 +6642,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.Text.Exps.LayerNumber,
 		C3.Plugins.TiledBg.Acts.Destroy,
 		C3.Plugins.Touch.Cnds.OnTouchEnd,
@@ -6669,6 +6690,8 @@ self.C3_JsPropNameTable = [
 	{РамкаВодителей: 0},
 	{ЧисленностьПачекКарточекБонусногоЗаезда: 0},
 	{Тест: 0},
+	{Fade: 0},
+	{Выбыл: 0},
 	{НепопулярныеГласные: 0},
 	{НепопулярныеГласныеJSON: 0},
 	{НепопулярныеСогласные: 0},
@@ -6770,6 +6793,8 @@ self.C3_JsPropNameTable = [
 	{ОпределёнДубликат: 0},
 	{УчтенаТекущаяКарточка: 0},
 	{КарточкиЗакончились: 0},
+	{YАватараПротивника: 0},
+	{РазмерСтороныАватара: 0},
 	{Х: 0},
 	{Y: 0},
 	{ПолученныеОчки: 0},
@@ -6782,6 +6807,7 @@ self.C3_JsPropNameTable = [
 	{КоличествоНепустыхПачекКарточекВнутриОчередиНаПолёт: 0},
 	{ПобедаИгрока: 0},
 	{НепустыеСлоиКарточек: 0},
+	{ОжиданиеПередПеремещением: 0},
 	{МестоОтображаемогоИгрокаВТаблице: 0},
 	{ТурнирПройден: 0},
 	{МестоИгрока: 0},
@@ -6792,6 +6818,7 @@ self.C3_JsPropNameTable = [
 	{КоличествоПройденныхТурниров: 0},
 	{ПокупкаАвто: 0},
 	{НомерБудущейСтраницы: 0},
+	{СуммарныеОчкиЗаТурнир: 0},
 	{НомерТекущегоСоперника: 0}
 ];
 }
@@ -7117,11 +7144,6 @@ self.C3_ExpressionFuncs = [
 			return () => (v0.GetValue() * 8);
 		},
 		() => "ПризовыеОчки",
-		() => "tournamentscount",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => add(f0("tournamentscount"), 1);
-		},
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 200);
@@ -7142,9 +7164,8 @@ self.C3_ExpressionFuncs = [
 		() => "Mask",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 30);
+			return () => (n0.ExpObject() - 100);
 		},
-		() => 50,
 		() => "player",
 		() => "bot",
 		() => 36,
@@ -7251,6 +7272,7 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("", v0.GetValue()) + "м");
 		},
+		() => 50,
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
@@ -7316,6 +7338,24 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 40);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			return () => (n0.ExpObject() - (n1.ExpObject() / 3));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 300);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			return () => (n0.ExpObject() + (n1.ExpObject() / 3));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 20);
 		},
 		() => "global@score",
 		() => "default",
@@ -7420,19 +7460,20 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() + 40);
 		},
 		() => "main",
-		() => "Вы прошли турнир! + 50 монет\n\nНажмите на экран, чтобы продолжить",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 50);
 		},
+		() => "tournamentscount",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => add(f0("tournamentscount"), 1);
+		},
+		() => "Вы прошли турнир! + 50 монет\n\nНажмите на экран, чтобы продолжить",
 		() => "КнопкиМеню",
 		() => "shop",
 		() => 128,
 		() => 1860,
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 100);
-		},
 		() => "left",
 		() => "right",
 		() => "Слой 0",
