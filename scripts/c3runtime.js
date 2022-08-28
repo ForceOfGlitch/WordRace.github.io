@@ -6579,7 +6579,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSet,
-		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
 		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
@@ -6601,6 +6600,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Cnds.CompareX,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
 		C3.Plugins.Sprite.Acts.SetAnimSpeed,
+		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Behaviors.Pin.Acts.PinByProperties,
 		C3.Plugins.Sprite.Acts.MoveToTop,
@@ -6617,6 +6617,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetVAlign,
 		C3.Plugins.Text.Acts.SetHAlign,
 		C3.Plugins.Sprite.Exps.LayerName,
+		C3.Plugins.System.Cnds.PickAll,
 		C3.Plugins.Sprite.Cnds.OnCollision,
 		C3.Behaviors.MoveTo.Acts.SetMaxSpeed,
 		C3.Behaviors.MoveTo.Acts.SetSpeed,
@@ -6624,6 +6625,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.StartAnim,
 		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Cnds.IsAdsLastAdSuccess,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
 		C3.Plugins.Eponesh_GameScore.Acts.PaymentsPurchase,
 		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.Sprite.Exps.Width,
@@ -6635,7 +6637,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
-		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
@@ -6650,7 +6651,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnPaymentsPurchase,
 		C3.Plugins.Eponesh_GameScore.Acts.PaymentsConsume,
-		C3.Plugins.System.Cnds.PickAll,
 		C3.Plugins.System.Acts.WaitForSignal,
 		C3.Plugins.System.Acts.Signal
 	];
@@ -6667,6 +6667,7 @@ self.C3_JsPropNameTable = [
 	{tag: 0},
 	{МашинаИгрока: 0},
 	{Фон: 0},
+	{Win: 0},
 	{КнопкаКонецИгры: 0},
 	{ДобавлениеНаКолоду: 0},
 	{ОсталосьВКолоде: 0},
@@ -6776,7 +6777,6 @@ self.C3_JsPropNameTable = [
 	{ТестФлаг: 0},
 	{РазрешениеНаНажатиеКарточек: 0},
 	{ПроизошёлКонецЗаезда: 0},
-	{ИгрокПобедил: 0},
 	{БонусныеОчкиЗаЗаезд: 0},
 	{i: 0},
 	{j: 0},
@@ -7169,6 +7169,10 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 100);
 		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(7);
+		},
 		() => "player",
 		() => "bot",
 		() => 36,
@@ -7195,13 +7199,13 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
-			const v1 = p._GetNode(1).GetVar();
-			const v2 = p._GetNode(2).GetVar();
-			return () => (n0.ExpObject() + (v1.GetValue() * (1535 / v2.GetValue())));
+			return () => n0.ExpInstVar_Family();
 		},
 		p => {
 			const n0 = p._GetNode(0);
-			return () => n0.ExpInstVar_Family();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => (n0.ExpObject() + (v1.GetValue() * (1535 / v2.GetValue())));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7275,6 +7279,10 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("", v0.GetValue()) + "м");
 		},
+		() => "2",
+		() => 1920,
+		() => 1080,
+		() => 540,
 		() => 50,
 		p => {
 			const n0 = p._GetNode(0);
@@ -7296,9 +7304,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "hundredCoins",
 		() => "thousandСoins",
-		() => 540,
-		() => 1920,
-		() => 1080,
 		() => 75,
 		() => 250,
 		() => "МагазинМонет",
@@ -7464,8 +7469,8 @@ self.C3_ExpressionFuncs = [
 			return () => add(f0("coins"), 150);
 		},
 		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (and(((and((("Лига пройдена!" + "\n") + "Вы за лигу проехали: "), v0.GetValue()) + "\n") + "Соответствующая награда: "), 100) + "монет");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (and(((and((("Лига пройдена!" + "\n") + "Вы за лигу проехали: "), f0("leagueSum")) + "\n") + "Соответствующая награда: "), 100) + "монет");
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -7476,16 +7481,16 @@ self.C3_ExpressionFuncs = [
 			return () => add(f0("coins"), 350);
 		},
 		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (and(((and((("Лига пройдена!" + "\n") + "Вы за лигу проехали: "), v0.GetValue()) + "\n") + "Соответствующая награда: "), 300) + "монет");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (and(((and((("Лига пройдена!" + "\n") + "Вы за лигу проехали: "), f0("leagueSum")) + "\n") + "Соответствующая награда: "), 300) + "монет");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 550);
 		},
 		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (and(((and((("Лига пройдена!" + "\n") + "Вы за лигу проехали: "), v0.GetValue()) + "\n") + "Соответствующая награда: "), 500) + "монет");
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (and(((and((("Лига пройдена!" + "\n") + "Вы за лигу проехали: "), f0("leagueSum")) + "\n") + "Соответствующая награда: "), 500) + "монет");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7538,7 +7543,6 @@ self.C3_ExpressionFuncs = [
 		() => "carBuyCount",
 		() => "0",
 		() => "1",
-		() => "2",
 		() => 3000,
 		() => 5000,
 		() => 7000,
@@ -7592,10 +7596,6 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			const f2 = p._GetNode(2).GetBoundMethod();
 			return () => f0(((v1.GetValue() + 1) + f2("i")), "avatar");
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject(7);
 		},
 		() => 210,
 		() => 265,
