@@ -6822,6 +6822,8 @@ self.C3_JsPropNameTable = [
 	{ПокупкаАвто: 0},
 	{НомерБудущейСтраницы: 0},
 	{НайденИгрок: 0},
+	{X: 0},
+	{Layer: 0},
 	{СуммарныеОчкиЗаТурнир: 0},
 	{НомерТекущегоСоперника: 0}
 ];
@@ -7080,6 +7082,9 @@ self.C3_ExpressionFuncs = [
 			const v2 = p._GetNode(2).GetVar();
 			return () => ((Math.round(((1.1631 * Math.pow(f0(v1.GetValue()), 2.8407)) / 10)) * 10) * (1 + (v2.GetValue() * 0.5)));
 		},
+		() => "Слово",
+		() => "БезСлова",
+		() => "БезБукв",
 		() => "playerScore",
 		() => 1800,
 		() => 800,
@@ -7337,6 +7342,10 @@ self.C3_ExpressionFuncs = [
 		() => "ПокупкаМонет",
 		() => 328,
 		() => 121,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 110);
+		},
 		() => "amount",
 		p => {
 			const n0 = p._GetNode(0);
@@ -7536,6 +7545,8 @@ self.C3_ExpressionFuncs = [
 		() => "left",
 		() => "right",
 		() => "Слой 0",
+		() => 300,
+		() => 38,
 		() => "sell",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7548,14 +7559,16 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "carBuyCount",
 		() => "0",
+		() => 39,
 		() => "1",
+		() => 49,
 		() => 3000,
 		() => 5000,
 		() => 7000,
 		() => "3",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => add(f0("coins"), 1000);
+			return () => add(f0("coins"), 250);
 		},
 		() => 350,
 		() => 160,
@@ -7564,14 +7577,15 @@ self.C3_ExpressionFuncs = [
 			return () => (and("", (f0("i") + 1)) + "");
 		},
 		() => "preSell",
-		() => "ПокупкаАвто",
 		() => "speed",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => and("Скорость X", (1.5 + (0.5 * f0("i"))));
 		},
-		() => 300,
+		() => "Куплено",
+		() => "ПокупкаАвто",
 		() => "postSell",
+		() => "Серые",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
@@ -7593,6 +7607,7 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => f0(v1.GetValue(), "id");
 		},
+		() => "ОК",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Гонка #", (v0.GetValue() + 1)) + "");
