@@ -6652,6 +6652,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Cnds.OnPaymentsPurchase,
 		C3.Plugins.Eponesh_GameScore.Acts.PaymentsConsume,
 		C3.Plugins.System.Acts.WaitForSignal,
+		C3.Plugins.Eponesh_GameScore.Exps.PlayerAvatar,
 		C3.Plugins.System.Acts.Signal
 	];
 };
@@ -6820,6 +6821,7 @@ self.C3_JsPropNameTable = [
 	{КоличествоПройденныхТурниров: 0},
 	{ПокупкаАвто: 0},
 	{НомерБудущейСтраницы: 0},
+	{НайденИгрок: 0},
 	{СуммарныеОчкиЗаТурнир: 0},
 	{НомерТекущегоСоперника: 0}
 ];
@@ -7450,6 +7452,10 @@ self.C3_ExpressionFuncs = [
 		() => "Турнир пройден!\nСоответствующая награда: 50монет",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => add(f0("coins"), 50);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => mod(f0("tournamentscount"), 6);
 		},
 		p => {
@@ -7466,7 +7472,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => add(f0("coins"), 150);
+			return () => add(f0("coins"), 100);
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7478,7 +7484,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => add(f0("coins"), 350);
+			return () => add(f0("coins"), 300);
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7486,7 +7492,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => add(f0("coins"), 550);
+			return () => add(f0("coins"), 500);
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7549,10 +7555,6 @@ self.C3_ExpressionFuncs = [
 		() => "3",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => add(f0("coins"), 100);
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 1000);
 		},
 		() => 350,
@@ -7585,6 +7587,11 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
 			return () => and("Скорость X", (1.5 + (0.5 * (f0("i") + (3 * v1.GetValue())))));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			return () => f0(v1.GetValue(), "id");
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
