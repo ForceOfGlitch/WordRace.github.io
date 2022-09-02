@@ -6587,6 +6587,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Acts.Clear,
 		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Plugins.Eponesh_GameScore.Cnds.IsPlayerStub,
+		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.System.Exps.loopindex,
 		C3.Plugins.System.Acts.CreateObject,
@@ -6600,7 +6602,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetInstanceVar,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.Text.Acts.SetText,
-		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.AJAX.Cnds.OnComplete,
@@ -7037,6 +7038,10 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("", v0.GetValue()) + "");
 		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => v0.GetValue();
+		},
 		() => "i",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7051,10 +7056,6 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject();
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => v0.GetValue();
 		},
 		() => 150,
 		() => 180,
@@ -7694,9 +7695,9 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 5);
 		},
-		() => "0",
 		() => 39,
 		() => 49,
+		() => "0",
 		() => 3000,
 		() => 5000,
 		() => 7000,
@@ -7704,6 +7705,7 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 250);
 		},
+		() => "curCoins",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 500);
