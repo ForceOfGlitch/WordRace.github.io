@@ -6670,6 +6670,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.PickNth,
 		C3.Plugins.System.Cnds.Else,
 		C3.Plugins.System.Acts.StopLoop,
+		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
 		C3.Plugins.Text.Acts.SetBoolInstanceVar,
 		C3.Behaviors.MoveTo.Acts.MoveToObject,
@@ -6677,11 +6678,14 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSet,
-		C3.Plugins.Sprite.Exps.X,
+		C3.Plugins.Sprite.Acts.StartAnim,
 		C3.Plugins.System.Exps.len,
 		C3.Plugins.System.Acts.CallMappedFunction,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
+		C3.Plugins.Eponesh_GameScore.Acts.AdsShowFullscreen,
+		C3.Plugins.System.Acts.WaitForPreviousActions,
+		C3.Plugins.Audio.Acts.StopAll,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.System.Exps.mid,
@@ -6704,10 +6708,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Pin.Acts.PinByProperties,
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.Text.Acts.SetFontSize,
+		C3.Plugins.Text.Acts.SetFontFace,
 		C3.Plugins.Text.Acts.SetFontColor,
 		C3.Plugins.Text.Acts.SetSize,
 		C3.Plugins.Text.Acts.AppendText,
-		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Behaviors.MoveTo.Acts.Stop,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
 		C3.Plugins.Sprite.Acts.SetVisible,
@@ -6716,14 +6720,14 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetVAlign,
 		C3.Plugins.Text.Acts.SetHAlign,
 		C3.Plugins.Sprite.Exps.LayerName,
+		C3.Plugins.Audio.Acts.FadeVolume,
 		C3.Plugins.System.Cnds.PickAll,
 		C3.Plugins.Sprite.Cnds.OnCollision,
 		C3.Behaviors.MoveTo.Acts.SetMaxSpeed,
 		C3.Behaviors.MoveTo.Acts.SetSpeed,
 		C3.Behaviors.MoveTo.Exps.MaxSpeed,
-		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
-		C3.Plugins.Sprite.Acts.StartAnim,
 		C3.Plugins.Sprite.Exps.AnimationName,
+		C3.Plugins.Eponesh_GameScore.Acts.AdsShowRewarded,
 		C3.Plugins.Eponesh_GameScore.Cnds.IsAdsLastAdSuccess,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
 		C3.Plugins.Eponesh_GameScore.Acts.PaymentsPurchase,
@@ -6738,13 +6742,12 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Exps.LayerName,
 		C3.Plugins.TiledBg.Acts.SetOpacity,
 		C3.Plugins.TiledBg.Acts.SetSize,
-		C3.Plugins.Text.Acts.SetFontFace,
 		C3.Plugins.System.Acts.MapFunction,
 		C3.Plugins.TiledBg.Acts.Destroy,
 		C3.Plugins.Mouse.Acts.SetCursor,
 		C3.Plugins.Mouse.Cnds.IsOverObject,
-		C3.Plugins.Audio.Acts.StopAll,
 		C3.Plugins.Audio.Acts.PlayByName,
+		C3.Plugins.System.Cnds.LayerVisible,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
@@ -6760,14 +6763,15 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
-		C3.Plugins.System.Cnds.LayerVisible,
 		C3.Plugins.Touch.Cnds.OnTouchEnd,
 		C3.Plugins.TiledBg.Acts.SetInstanceVar,
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Arr.Acts.SetXY,
 		C3.Plugins.System.Cnds.ForEachOrdered,
 		C3.Plugins.Sprite.Acts.StopAnim,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerFetchFields,
 		C3.Plugins.System.Acts.WaitForSignal,
+		C3.Plugins.Eponesh_GameScore.Cnds.OnPlayerFetchFieldsComplete,
 		C3.Plugins.System.Acts.Signal
 	];
 };
@@ -6837,6 +6841,7 @@ self.C3_JsPropNameTable = [
 	{Бот6: 0},
 	{Бот0: 0},
 	{Рамка: 0},
+	{НомераВыбранныхАватарок: 0},
 	{Позиция: 0},
 	{АватарИгрока1: 0},
 	{АватарИгрока2: 0},
@@ -6881,6 +6886,11 @@ self.C3_JsPropNameTable = [
 	{ХитбоксСлайдеров: 0},
 	{ГраницыНаградыЛиги: 0},
 	{НаградыЗаЛигу: 0},
+	{state: 0},
+	{Звук: 0},
+	{НастройкиЗвукаФон: 0},
+	{ЗакрытьМеню: 0},
+	{ПереключательЗвука: 0},
 	{Мышь: 0},
 	{Текст: 0},
 	{Тач: 0},
@@ -6939,6 +6949,7 @@ self.C3_JsPropNameTable = [
 	{Х: 0},
 	{Y: 0},
 	{ПолученныеОчки: 0},
+	{ВходнойТекст: 0},
 	{ОжиданиеБота: 0},
 	{ДобавляемыеОчки: 0},
 	{ДлинаСобранногоСлова: 0},
@@ -6956,6 +6967,7 @@ self.C3_JsPropNameTable = [
 	{МестоИгрока: 0},
 	{ОткрытЛиМагазинАвто: 0},
 	{ОткрытЛиМагазинМонет: 0},
+	{ОткрытыЛиНастройки: 0},
 	{КоличествоПокупокАвто: 0},
 	{ЗвукВключен: 0},
 	{МузыкаВключена: 0},
@@ -6968,8 +6980,11 @@ self.C3_JsPropNameTable = [
 	{Layer: 0},
 	{ТипНаграды: 0},
 	{ВремяОжидания: 0},
+	{КоличествоАватаровВБазеТурниров: 0},
 	{СуммарныеОчкиЗаТурнир: 0},
-	{НомерТекущегоСоперника: 0}
+	{НомерТекущегоСоперника: 0},
+	{ПодтверждениеУникальности: 0},
+	{НомерСпрайтаАватара: 0}
 ];
 }
 
@@ -7157,7 +7172,18 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 17,
 		() => 0.02,
+		() => "1",
+		() => 100,
 		() => 8,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 200);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 120);
+		},
+		() => "Максимум 8 букв!",
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
@@ -7186,6 +7212,7 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 0.3,
 		() => "curScore",
+		() => 0.2,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
@@ -7200,6 +7227,10 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "5",
 		() => "3",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 300);
+		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => subtract(f0("coins"), 30);
@@ -7336,17 +7367,22 @@ self.C3_ExpressionFuncs = [
 		() => "player",
 		() => "bot",
 		() => 36,
+		() => "ComicHelvetic_Light",
 		() => -717750023016447,
 		() => 200,
-		() => 100,
 		() => "+",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() - 100);
 		},
+		() => 600,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() / 2);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => Math.floor(f0(1, 2));
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7439,6 +7475,9 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("", v0.GetValue()) + "м");
 		},
+		() => "prizeTheme",
+		() => -100,
+		() => 3.5,
 		() => "2",
 		() => 1920,
 		() => 1080,
@@ -7523,10 +7562,6 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 300);
-		},
-		p => {
-			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			return () => (n0.ExpObject() + (n1.ExpObject() / 3));
 		},
@@ -7543,7 +7578,6 @@ self.C3_ExpressionFuncs = [
 		() => 310,
 		() => 115,
 		() => "eduAccept",
-		() => "ComicHelvetic_Light",
 		() => 45,
 		() => 3041562,
 		() => "Понятно",
@@ -7552,27 +7586,24 @@ self.C3_ExpressionFuncs = [
 		() => 15132390,
 		() => "Доберись до финиша быстрее соперника.",
 		() => "Составляй слова и жми на стрелку. Чем больше букв в слове, тем дальше проедет твой авто.",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 200);
-		},
 		() => 1900,
 		() => "Карты со звёздами считаются за любую букву.\nСобери слово из 5 или более букв, используя звёзды.",
 		() => 1500,
 		() => "Нужно 5 или более букв.",
-		() => 850,
+		() => 950,
 		() => 1750,
-		() => 400,
-		() => "Если не хватает звёздочек, то их можно купить за монеты.\n\nЕсли ошибся буквой, нажми на неё, и она вернётся в колоду.",
+		() => "Если не хватает звёздочек, то их можно купить за монеты.\n\nЕсли ошибся буквой, нажми на неё, и она вернётся в колоду.\n\nЕсли сбросил буквы без слова, авто проедет по 1 м. за каждую букву.",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() - 350);
+			return () => (n0.ExpObject() - 450);
 		},
-		() => "1",
+		() => 0.1,
 		() => "КурсорЗаезд",
 		() => "МузыкаИгра",
 		() => "призовой заезд",
-		() => "prizeTheme",
+		() => -10,
+		() => "тема заезда",
+		() => "gameTheme",
 		() => "ЗвукиИгра",
 		() => "финиш",
 		() => "finishLine",
@@ -7589,6 +7620,11 @@ self.C3_ExpressionFuncs = [
 		() => "wordOnCar3",
 		() => "форсаж",
 		() => "wordOnCar4",
+		() => "Состояние звука заезд",
+		() => "music",
+		() => "МузыкаМеню",
+		() => "sound",
+		() => "ЗвукиМеню",
 		() => "global@score",
 		() => "default",
 		p => {
@@ -7754,7 +7790,7 @@ self.C3_ExpressionFuncs = [
 		() => 580,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (Math.floor(divide(f0("tournamentscount"), 6)) + 1);
+			return () => (Math.floor(divide(f0("tournamentscount"), 6)) % 2);
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -7777,7 +7813,13 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (and("", (Math.floor(divide(f0("tournamentscount"), 6)) + 1)) + "");
 		},
-		() => 0.1,
+		() => "mainTheme",
+		() => 1540,
+		() => 630,
+		() => 280,
+		() => 1125,
+		() => 532,
+		() => 632,
 		() => "shop",
 		() => 128,
 		() => 1860,
@@ -7836,13 +7878,13 @@ self.C3_ExpressionFuncs = [
 			return () => f0(v1.GetValue(), "id");
 		},
 		() => "ОК",
+		() => 65,
 		() => 450,
 		() => 700,
 		() => 720,
 		() => 480,
 		() => 1060,
 		() => 275,
-		() => 950,
 		() => "leagueTotalScore",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7897,24 +7939,14 @@ self.C3_ExpressionFuncs = [
 		() => "ComicHelvetic_Medium",
 		() => 39393,
 		() => "КурсорМеню",
-		() => "МузыкаМеню",
 		() => "тема основного экрана",
-		() => "mainTheme",
-		() => "ЗвукиМеню",
 		() => "магазин играть крестик",
 		() => "universalTap",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("Гонка #", (v0.GetValue() + 1)) + "");
 		},
-		() => 99,
 		() => "links",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const v1 = p._GetNode(1).GetVar();
-			const f2 = p._GetNode(2).GetBoundMethod();
-			return () => f0(((v1.GetValue() + 1) + f2("i")), "avatar");
-		},
 		() => 210,
 		() => 265,
 		() => 665,
@@ -7922,6 +7954,7 @@ self.C3_ExpressionFuncs = [
 		() => 1190,
 		() => 1655,
 		() => 490,
+		() => 400,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(3);
@@ -7931,8 +7964,28 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.round(f0(0, 1));
 		},
-		() => "тема заезда",
-		() => "gameTheme"
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => Math.floor(f0(0, 35));
+		},
+		() => "k",
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject(f1("k"));
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("k");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(1, 2.5);
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and(v0.GetValue(), ".jpg");
+		}
 ];
 
 
