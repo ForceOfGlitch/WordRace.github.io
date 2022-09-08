@@ -6748,6 +6748,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Audio.Acts.PlayByName,
 		C3.Plugins.System.Cnds.LayerVisible,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerLoad,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
@@ -7822,6 +7823,7 @@ self.C3_ExpressionFuncs = [
 		() => 532,
 		() => 632,
 		() => "shop",
+		() => "Магазин",
 		() => 128,
 		() => 1860,
 		p => {
