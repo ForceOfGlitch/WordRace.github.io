@@ -7632,12 +7632,12 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1(), "avatar");
+			return () => f0(f1("i"), "avatar");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1(), "name");
+			return () => f0(f1("i"), "name");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7646,7 +7646,7 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => and(f0(f1(), "score"), " м");
+			return () => and(f0(f1("i"), "score"), " м");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7667,6 +7667,21 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => and(f0(), " м");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => f0(f1(), "avatar");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => f0(f1(), "name");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => and(f0(f1(), "score"), " м");
 		},
 		() => "Слой 0",
 		p => {
