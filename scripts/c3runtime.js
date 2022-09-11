@@ -6782,9 +6782,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
 		C3.Plugins.Touch.Cnds.OnTouchEnd,
-		C3.Plugins.PlatformInfo.Cnds.IsOnMobile,
-		C3.Plugins.PlatformInfo.Cnds.IsOniOS,
-		C3.Plugins.PlatformInfo.Cnds.IsOnMacOS,
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Plugins.TiledBg.Acts.SetInstanceVar,
 		C3.Plugins.Dictionary.Acts.AddKey,
@@ -7654,12 +7651,12 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1("i"), "avatar");
+			return () => f0(f1("i"), "name");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1("i"), "name");
+			return () => f0(f1("i"), "avatar");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
