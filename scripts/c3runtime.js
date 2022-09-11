@@ -6766,23 +6766,22 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Audio.Acts.PlayByName,
 		C3.Plugins.System.Cnds.LayerVisible,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerLoad,
-		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
+		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardPlayerFieldAt,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerID,
-		C3.Plugins.Eponesh_GameScore.Exps.PlayerAvatar,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerName,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerScore,
+		C3.Plugins.Eponesh_GameScore.Exps.PlayerAvatar,
 		C3.Plugins.Sprite.Acts.SetWidth,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchPlayerRatingScoped,
 		C3.Plugins.Eponesh_GameScore.Exps.LeaderboardCurPlayerPosition,
+		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetchScoped,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAddScore,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerAdd,
 		C3.Plugins.Text.Acts.SetY,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetScale,
-		C3.Plugins.Touch.Cnds.OnTouchEnd,
-		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Plugins.TiledBg.Acts.SetInstanceVar,
 		C3.Plugins.Dictionary.Acts.AddKey,
 		C3.Plugins.Arr.Acts.SetXY,
@@ -7648,15 +7647,15 @@ self.C3_ExpressionFuncs = [
 		() => "ЗвукиМеню",
 		() => "global@score",
 		() => "default",
+		() => "name",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1("i"), "name");
+			return () => (and("", f0("i")) + "");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1("i"), "avatar");
+			return () => f0(f1("i"), "name");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7666,6 +7665,11 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => and(f0(f1("i"), "score"), " м");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => f0(f1("i"), "avatar");
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7687,21 +7691,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => and(f0(), " м");
 		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1(), "avatar");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => f0(f1(), "name");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => and(f0(f1(), "score"), " м");
-		},
 		() => "Слой 0",
 		p => {
 			const n0 = p._GetNode(0);
@@ -7713,6 +7702,7 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() + 1);
 		},
+		() => "0",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, "score");
@@ -7874,7 +7864,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "carBuyCount",
 		() => "curCoins",
-		() => "0",
 		() => 3000,
 		() => 5000,
 		() => 7000,
