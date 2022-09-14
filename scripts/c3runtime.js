@@ -7435,6 +7435,8 @@ self.C3_ExpressionFuncs = [
 		},
 		() => -960,
 		() => 271,
+		() => 960,
+		() => -61,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 130);
@@ -7445,7 +7447,6 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 1920);
 		},
-		() => 960,
 		() => "Animation 2",
 		() => "scoreScreen",
 		() => "none",
