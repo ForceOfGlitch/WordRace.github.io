@@ -7361,7 +7361,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.floor(divide(f0("tournamentscount"), 6));
 		},
-		() => 10,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.floor(f0(0, 3));
@@ -7370,6 +7369,7 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() + 1);
 		},
+		() => 10,
 		() => 60,
 		() => 110,
 		() => 190,
