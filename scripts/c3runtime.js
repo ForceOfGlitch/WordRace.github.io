@@ -6655,9 +6655,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.AJAX.Acts.RequestFile,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.Arr.Acts.Clear,
-		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.System.Cnds.For,
+		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.System.Exps.loopindex,
 		C3.Plugins.System.Acts.CreateObject,
 		C3.Plugins.System.Cnds.PickLastCreated,
@@ -6765,6 +6765,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Audio.Acts.PlayByName,
 		C3.Plugins.System.Cnds.LayerVisible,
+		C3.Behaviors.MoveTo.Cnds.OnArrived,
+		C3.Plugins.Audio.Acts.Stop,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerLoad,
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardFetch,
 		C3.Plugins.Eponesh_GameScore.Cnds.OnLeaderboardFetch,
@@ -6806,6 +6808,7 @@ self.C3_JsPropNameTable = [
 	{ДвижениеК: 0},
 	{АктивнаяКарточка: 0},
 	{БукваНаКарточке: 0},
+	{Уровень: 0},
 	{МашинаБота: 0},
 	{ОчкиСобранногоСлова: 0},
 	{МашинаИгрока: 0},
@@ -6967,6 +6970,8 @@ self.C3_JsPropNameTable = [
 	{КолодаТекущейБуквыНаКарточке: 0},
 	{ОпределёнДубликат: 0},
 	{УчтенаТекущаяКарточка: 0},
+	{СлучайныйРезультат: 0},
+	{УровеньБота: 0},
 	{КарточкиЗакончились: 0},
 	{YАватараПротивника: 0},
 	{РазмерСтороныАватара: 0},
@@ -7126,29 +7131,18 @@ self.C3_ExpressionFuncs = [
 		() => 1,
 		() => -1,
 		() => 1.2,
-		() => 10,
-		() => 2,
-		() => 30,
-		() => 3,
-		() => 60,
-		() => 4,
-		() => 110,
-		() => 5,
-		() => 190,
-		() => 6,
-		() => 290,
-		() => 7,
-		() => 430,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0();
+		},
 		() => "Тачи по объектам в процессе игры",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("", v0.GetValue()) + "");
 		},
 		() => "i",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0();
-		},
+		() => 2,
+		() => 7,
 		() => "j",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -7187,16 +7181,19 @@ self.C3_ExpressionFuncs = [
 			return () => f0("coins");
 		},
 		() => "jokerPrice",
+		() => 30,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(15, 45);
 		},
+		() => 6,
 		p => {
 			const n0 = p._GetNode(0);
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => n0.ExpObject((and("", f1()) + ".data"));
 		},
 		() => 17,
+		() => 4,
 		() => 0.02,
 		() => "1",
 		() => 100,
@@ -7244,6 +7241,7 @@ self.C3_ExpressionFuncs = [
 			const v1 = p._GetNode(1).GetVar();
 			return () => f0(v1.GetValue());
 		},
+		() => 5,
 		() => "Магазин внутри игры",
 		() => "edu",
 		() => "4",
@@ -7252,6 +7250,7 @@ self.C3_ExpressionFuncs = [
 			return () => (972 + (n0.ExpObject() * 170));
 		},
 		() => "5",
+		() => 3,
 		() => "3",
 		p => {
 			const n0 = p._GetNode(0);
@@ -7359,6 +7358,45 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpInstVar() % 2);
 		},
 		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => Math.floor(divide(f0("tournamentscount"), 6));
+		},
+		() => 10,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => Math.floor(f0(0, 3));
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (v0.GetValue() + 1);
+		},
+		() => 60,
+		() => 110,
+		() => 190,
+		() => 290,
+		() => 430,
+		() => "0",
+		() => 15,
+		() => 45,
+		() => 90,
+		() => 165,
+		() => 285,
+		() => 435,
+		() => 645,
+		() => 20,
+		() => 120,
+		() => 220,
+		() => 380,
+		() => 580,
+		() => 860,
+		() => "2",
+		() => 25,
+		() => 75,
+		() => 275,
+		() => 475,
+		() => 725,
+		() => 1075,
+		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() * 8);
 		},
@@ -7375,7 +7413,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 1700,
 		() => 2000,
-		() => 15,
 		p => {
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
@@ -7505,7 +7542,6 @@ self.C3_ExpressionFuncs = [
 		() => "prizeTheme",
 		() => -100,
 		() => 3.5,
-		() => "2",
 		() => 1920,
 		() => 1080,
 		() => 540,
@@ -7540,7 +7576,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => add(f0("coins"), 500);
 		},
-		() => 75,
 		() => 250,
 		() => "МагазинМонет",
 		p => {
@@ -7549,7 +7584,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 570,
 		() => "card",
-		() => 380,
 		() => 530,
 		p => {
 			const n0 = p._GetNode(0);
@@ -7605,7 +7639,6 @@ self.C3_ExpressionFuncs = [
 		() => 310,
 		() => 115,
 		() => "eduAccept",
-		() => 45,
 		() => 3041562,
 		() => "Понятно",
 		() => "eduRegular",
@@ -7641,7 +7674,6 @@ self.C3_ExpressionFuncs = [
 		() => "lose",
 		() => "добавь газу",
 		() => "wordOnCar1",
-		() => "поехали",
 		() => "wordOnCar2",
 		() => "летим",
 		() => "wordOnCar3",
@@ -7705,11 +7737,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 195,
 		() => "variable",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (v0.GetValue() + 1);
-		},
-		() => "0",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, "score");
@@ -7804,7 +7831,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "Турнир",
 		() => "reward",
-		() => 120,
 		() => 11527417,
 		() => 890,
 		() => 690,
@@ -7821,7 +7847,6 @@ self.C3_ExpressionFuncs = [
 		() => 566,
 		() => 517,
 		() => 512,
-		() => 580,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (Math.floor(divide(f0("tournamentscount"), 6)) % 2);
@@ -7918,7 +7943,6 @@ self.C3_ExpressionFuncs = [
 		() => 720,
 		() => 480,
 		() => 1060,
-		() => 275,
 		() => "leagueTotalScore",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7971,7 +7995,6 @@ self.C3_ExpressionFuncs = [
 		() => 12,
 		() => 13,
 		() => 14,
-		() => 20,
 		() => "ComicHelvetic_light",
 		() => 21561,
 		() => "ComicHelvetic_Medium",
@@ -7998,7 +8021,6 @@ self.C3_ExpressionFuncs = [
 		() => 210,
 		() => 265,
 		() => 665,
-		() => 725,
 		() => 1190,
 		() => 1655,
 		() => 490,
