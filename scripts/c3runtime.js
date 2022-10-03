@@ -7270,7 +7270,7 @@ self.C3_ExpressionFuncs = [
 			return () => f0("i");
 		},
 		() => 10,
-		() => 32855,
+		() => 32886,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const n1 = p._GetNode(1);
@@ -7676,7 +7676,6 @@ self.C3_ExpressionFuncs = [
 		() => "lose",
 		() => "добавь газу",
 		() => "wordOnCar1",
-		() => "wordOnCar2",
 		() => "летим",
 		() => "wordOnCar3",
 		() => "форсаж",
@@ -7686,6 +7685,7 @@ self.C3_ExpressionFuncs = [
 		() => "МузыкаМеню",
 		() => "sound",
 		() => "ЗвукиМеню",
+		() => "wordOnCar2",
 		() => "global@score",
 		() => "score",
 		() => "name",
@@ -8038,7 +8038,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => Math.floor(f0(0, 35));
+			return () => Math.floor(f0(0, 115));
 		},
 		() => "k",
 		p => {
