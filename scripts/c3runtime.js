@@ -6656,6 +6656,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.Arr.Acts.Clear,
 		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Plugins.Sprite.Acts.SetAnimSpeed,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Arr.Acts.SetX,
 		C3.Plugins.System.Exps.loopindex,
@@ -6719,7 +6720,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.While,
 		C3.Plugins.Arr.Cnds.CompareX,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
-		C3.Plugins.Sprite.Acts.SetAnimSpeed,
 		C3.Plugins.Sprite.Acts.LoadURL,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Behaviors.Pin.Acts.PinByProperties,
@@ -6823,7 +6823,6 @@ self.C3_JsPropNameTable = [
 	{Занят: 0},
 	{СлотПоля: 0},
 	{ТекущееСлово: 0},
-	{Array: 0},
 	{СлотПокупкиДжокера: 0},
 	{ОчередьНаУдаление: 0},
 	{MoveTo: 0},
@@ -6954,6 +6953,7 @@ self.C3_JsPropNameTable = [
 	{ИдётОбучение: 0},
 	{СостояниеОбучения: 0},
 	{БонусныеОчкиЗаЗаезд: 0},
+	{ГраницаИндексаВероятностиДляДжокера: 0},
 	{i: 0},
 	{j: 0},
 	{MinНомерСвободнойЯчейки: 0},
@@ -7127,7 +7127,9 @@ self.C3_ExpressionFuncs = [
 		() => "noPopularGlas",
 		() => "popularSogl",
 		() => "popularGlas",
+		() => 80,
 		() => 0,
+		() => "",
 		() => 1,
 		() => -1,
 		() => 1.2,
@@ -7140,6 +7142,7 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (and("", v0.GetValue()) + "");
 		},
+		() => 15,
 		() => "i",
 		() => 2,
 		() => 7,
@@ -7148,7 +7151,6 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() - 2);
 		},
-		() => "",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject();
@@ -7263,6 +7265,11 @@ self.C3_ExpressionFuncs = [
 		() => -30,
 		() => "*",
 		() => "ФункцииПоСловам/Карточкам",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("i");
+		},
+		() => 10,
 		() => 32855,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7308,7 +7315,6 @@ self.C3_ExpressionFuncs = [
 			return () => f0("лесротум", f1(), 1);
 		},
 		() => 1.5,
-		() => 85,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (f0() % 2);
@@ -7345,10 +7351,6 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0("i");
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
 			const f2 = p._GetNode(2).GetBoundMethod();
 			return () => f0(v1.GetValue(), f2("j"), 1);
@@ -7361,7 +7363,7 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.floor(divide(f0("tournamentscount"), 6));
 		},
-		() => 10,
+		() => 9,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.floor(f0(0, 3));
@@ -7376,7 +7378,6 @@ self.C3_ExpressionFuncs = [
 		() => 290,
 		() => 430,
 		() => "0",
-		() => 15,
 		() => 45,
 		() => 90,
 		() => 165,
@@ -7636,6 +7637,7 @@ self.C3_ExpressionFuncs = [
 		() => "От5До7",
 		() => "8",
 		() => "Обучение",
+		() => 85,
 		() => 310,
 		() => 115,
 		() => "eduAccept",
@@ -7786,8 +7788,8 @@ self.C3_ExpressionFuncs = [
 			return () => f0("carBuyCount");
 		},
 		() => 30000,
-		() => 42000,
-		() => 51000,
+		() => 40000,
+		() => 50000,
 		() => "leagueSum",
 		() => "tournamentscount",
 		p => {
